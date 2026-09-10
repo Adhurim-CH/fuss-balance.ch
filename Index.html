@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fussbalance – Kosmetische Fusspflege in Othmarsingen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F6F3EC;
+    --cream-deep:#EFE9DC;
+    --sage:#77886A;
+    --sage-dark:#586048;
+    --sage-mist:#DFE5D6;
+    --taupe:#B4A48F;
+    --taupe-light:#E7DECF;
+    --brown:#3F362D;
+    --brown-soft:#6B6156;
+    --clay:#BE7F4C;
+    --line:#D8CFBE;
+    --radius:2px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--brown);
+    font-family:'Work Sans', sans-serif;
+    font-weight:400;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    color:var(--sage-dark);
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  a{color:inherit;}
+  img,svg{display:block;max-width:100%;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
+  section{padding:96px 0;}
+  @media (max-width:640px){ section{padding:64px 0;} .wrap{padding:0 22px;} }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--clay); outline-offset:3px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(246,243,236,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 32px; max-width:1080px; margin:0 auto;
+  }
+  .logo{
+    font-family:'Fraunces', serif; font-size:22px; font-weight:600;
+    color:var(--sage-dark); text-decoration:none; letter-spacing:0.01em;
+  }
+  .logo span{color:var(--clay);}
+  nav.links{display:flex; gap:34px; align-items:center;}
+  nav.links a{
+    text-decoration:none; font-size:15px; color:var(--brown-soft);
+    transition:color .2s ease;
+  }
+  nav.links a:hover{color:var(--sage-dark);}
+  .nav-phone{
+    font-size:15px; color:var(--sage-dark); text-decoration:none; font-weight:500;
+    display:flex; align-items:center; gap:8px;
+  }
+  .menu-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
+  .menu-toggle svg{width:24px; height:24px; stroke:var(--sage-dark);}
+  @media (max-width:820px){
+    nav.links{
+      position:absolute; top:100%; left:0; right:0;
+      flex-direction:column; background:var(--cream);
+      border-bottom:1px solid var(--line);
+      padding:18px 32px 26px; gap:16px;
+      display:none;
+    }
+    nav.links.open{display:flex;}
+    .menu-toggle{display:block;}
+    .nav-phone{display:none;}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:76px 0 40px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
+  }
+  @media (max-width:860px){ .hero .wrap{grid-template-columns:1fr;} .hero-art{order:-1;} }
+  .eyebrow-line{
+    display:flex; align-items:center; gap:12px; margin-bottom:22px;
+  }
+  .eyebrow-line .dash{width:28px; height:1px; background:var(--clay);}
+  .eyebrow-line span{font-size:14px; color:var(--brown-soft); letter-spacing:0.02em;}
+  .hero h1{
+    font-size:clamp(40px, 6vw, 64px);
+    line-height:1.05;
+    margin-bottom:24px;
+  }
+  .hero h1 em{font-style:italic; color:var(--clay);}
+  .hero p.lead{
+    font-size:19px; color:var(--brown-soft); max-width:46ch; margin-bottom:34px;
+  }
+  .btn-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:14px 28px; border-radius:var(--radius);
+    text-decoration:none; font-size:15px; font-weight:500;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn-primary{background:var(--sage-dark); color:var(--cream);}
+  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(88,96,72,0.28);}
+  .btn-ghost{background:transparent; color:var(--sage-dark); border:1px solid var(--taupe);}
+  .btn-ghost:hover{border-color:var(--sage-dark); transform:translateY(-2px);}
+
+  .hero-art{position:relative;}
+  .hero-art svg{width:100%; height:auto;}
+
+  /* ---------- Section labels ---------- */
+  .kicker{
+    font-size:15px; color:var(--clay); margin-bottom:10px; font-weight:500;
+  }
+  .section-head{max-width:56ch; margin-bottom:52px;}
+  .section-head h2{font-size:clamp(28px,3.6vw,38px); line-height:1.15;}
+  .section-head p{color:var(--brown-soft); margin-top:14px; font-size:17px;}
+
+  /* ---------- About ---------- */
+  .about{background:var(--sage-mist);}
+  .about .wrap{display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:start;}
+  @media (max-width:860px){ .about .wrap{grid-template-columns:1fr;} }
+  .quote-block{
+    background:var(--cream); border:1px solid var(--line);
+    padding:36px 32px; position:relative;
+  }
+  .quote-block p{
+    font-family:'Fraunces', serif; font-style:italic; font-size:20px;
+    color:var(--sage-dark); line-height:1.5; margin:0;
+  }
+  .quote-block .who{
+    margin-top:18px; font-family:'Work Sans', sans-serif; font-style:normal;
+    font-size:14px; color:var(--brown-soft);
+  }
+  .about-body h3{font-size:24px; margin-bottom:18px;}
+  .about-body p{color:var(--brown-soft); margin-bottom:16px; font-size:16px;}
+  .signoff{
+    margin-top:28px; padding-top:22px; border-top:1px solid var(--taupe);
+  }
+  .signoff .name{font-family:'Fraunces', serif; font-size:19px; color:var(--sage-dark);}
+  .signoff .role{font-size:14px; color:var(--brown-soft); margin-top:4px;}
+
+  /* ---------- Services (menu style) ---------- */
+  .services .section-head{margin-bottom:64px;}
+  .menu-group{margin-bottom:64px;}
+  .menu-group:last-child{margin-bottom:0;}
+  .menu-group-title{
+    display:flex; align-items:baseline; gap:16px; margin-bottom:8px;
+    border-bottom:1px solid var(--taupe); padding-bottom:14px;
+  }
+  .menu-group-title h3{font-size:22px; color:var(--sage-dark);}
+  .menu-group-title .sub{font-size:14px; color:var(--brown-soft);}
+  .menu-item{
+    display:grid; grid-template-columns:1fr auto; gap:10px 20px;
+    padding:22px 0; border-bottom:1px solid var(--line);
+    align-items:baseline;
+  }
+  .menu-item:last-child{border-bottom:none;}
+  .menu-item .name{font-family:'Fraunces', serif; font-size:19px; color:var(--brown);}
+  .menu-item .price{font-family:'Fraunces', serif; font-size:19px; color:var(--sage-dark); white-space:nowrap;}
+  .menu-item .desc{grid-column:1 / -1; color:var(--brown-soft); font-size:15px; max-width:60ch;}
+  .menu-item .note{grid-column:1 / -1; color:var(--clay); font-size:14px; font-style:italic;}
+  .menu-footnote{
+    margin-top:6px; font-size:14px; color:var(--brown-soft);
+    display:flex; gap:10px; align-items:flex-start;
+  }
+  .menu-footnote svg{flex:0 0 auto; width:18px; height:18px; margin-top:2px; stroke:var(--sage);}
+
+  /* ---------- Gutschein band ---------- */
+  .gift{
+    background:var(--sage-dark); color:var(--cream); position:relative; overflow:hidden;
+  }
+  .gift .wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+  @media (max-width:860px){ .gift .wrap{grid-template-columns:1fr;} }
+  .gift h2{color:var(--cream); font-size:clamp(28px,3.6vw,36px); margin-bottom:16px;}
+  .gift p{color:#E4E2D7; font-size:17px; max-width:44ch;}
+  .steps{list-style:none; margin:0; padding:0; counter-reset:step;}
+  .steps li{
+    counter-increment:step; position:relative; padding-left:44px; margin-bottom:24px; font-size:16px; color:#EDEAE0;
+  }
+  .steps li:last-child{margin-bottom:0;}
+  .steps li::before{
+    content:counter(step);
+    position:absolute; left:0; top:-2px;
+    width:30px; height:30px; border:1px solid #A9B49B; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces', serif; font-size:14px; color:var(--cream);
+  }
+  .gift-amount{
+    display:inline-block; margin-top:24px; padding:10px 20px;
+    border:1px solid #A9B49B; font-size:14px; color:var(--cream);
+  }
+
+  /* ---------- Contact ---------- */
+  .contact .wrap{display:grid; grid-template-columns:0.95fr 1.05fr; gap:64px; align-items:start;}
+  @media (max-width:900px){ .contact .wrap{grid-template-columns:1fr;} }
+  .info-block{margin-bottom:36px;}
+  .info-block h4{
+    font-size:13px; text-transform:none; letter-spacing:0.02em; color:var(--clay);
+    margin:0 0 12px; font-weight:600; font-family:'Work Sans', sans-serif;
+  }
+  .info-row{display:flex; gap:12px; margin-bottom:10px; font-size:16px; color:var(--brown);}
+  .info-row svg{flex:0 0 auto; width:19px; height:19px; stroke:var(--sage-dark); margin-top:2px;}
+  .hours-table{width:100%; border-collapse:collapse; margin-top:6px;}
+  .hours-table td{padding:7px 0; font-size:15px; border-bottom:1px solid var(--line);}
+  .hours-table td:first-child{color:var(--brown-soft);}
+  .hours-table td:last-child{text-align:right; color:var(--brown); font-weight:500;}
+  .hours-table tr:last-child td{border-bottom:none;}
+  .note-box{
+    background:var(--taupe-light); border-left:3px solid var(--clay);
+    padding:16px 20px; font-size:14.5px; color:var(--brown-soft); margin-top:28px;
+  }
+
+  form{background:var(--cream-deep); border:1px solid var(--line); padding:36px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
+  @media (max-width:520px){ .form-row{grid-template-columns:1fr;} }
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:18px;}
+  .field label{font-size:13.5px; color:var(--brown-soft);}
+  .field input, .field textarea{
+    font-family:'Work Sans', sans-serif; font-size:15px; color:var(--brown);
+    background:var(--cream); border:1px solid var(--taupe);
+    padding:11px 13px; border-radius:var(--radius);
+  }
+  .field textarea{resize:vertical; min-height:110px;}
+  .form-actions{display:flex; align-items:center; gap:16px; margin-top:6px;}
+  .form-note{font-size:13px; color:var(--brown-soft);}
+  .submit-btn{
+    background:var(--sage-dark); color:var(--cream); border:none; cursor:pointer;
+    padding:14px 30px; font-size:15px; font-weight:500; border-radius:var(--radius);
+    font-family:'Work Sans', sans-serif; transition:transform .18s ease;
+  }
+  .submit-btn:hover{transform:translateY(-2px);}
+  .form-confirm{
+    display:none; margin-top:16px; padding:14px 18px; background:var(--sage-mist);
+    border-left:3px solid var(--sage); font-size:14.5px; color:var(--sage-dark);
+  }
+  .form-confirm.visible{display:block;}
+
+  /* ---------- Anfahrt ---------- */
+  .location{background:var(--taupe-light);}
+  .location .wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
+  @media (max-width:820px){ .location .wrap{grid-template-columns:1fr;} }
+  .location h3{font-size:24px; margin-bottom:14px;}
+  .location p{color:var(--brown-soft); font-size:16px; margin-bottom:8px;}
+  .map-frame{
+    border:1px solid var(--taupe); aspect-ratio:4/3; overflow:hidden; background:var(--cream);
+  }
+  .map-frame iframe{width:100%; height:100%; border:0; filter:sepia(8%) saturate(85%);}
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--brown); color:#DCD6C8; padding:56px 0 32px;
+  }
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;}
+  .foot-brand{font-family:'Fraunces', serif; font-size:20px; color:var(--cream); margin-bottom:8px;}
+  .foot-addr{font-size:14px; color:#B9B2A2; line-height:1.7;}
+  .foot-links{display:flex; gap:30px; flex-wrap:wrap;}
+  .foot-links a{font-size:14px; color:#CFC9BB; text-decoration:none;}
+  .foot-links a:hover{color:var(--cream);}
+  .foot-bottom{
+    max-width:1080px; margin:40px auto 0; padding:20px 32px 0; border-top:1px solid #55483A;
+    font-size:12.5px; color:#8F8879;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <a href="#top" class="logo">Fuss<span>balance</span></a>
+    <nav class="links" id="navLinks">
+      <a href="#about">Über mich</a>
+      <a href="#leistungen">Leistungen</a>
+      <a href="#gutschein">Gutschein</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <a href="tel:+41792889803" class="nav-phone">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      079 288 98 03
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Menü öffnen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-text">
+        <div class="eyebrow-line"><span class="dash"></span><span>Kosmetische Fusspflege in Othmarsingen</span></div>
+        <h1>Für Füsse, die Sie<br>den ganzen Tag <em>tragen.</em></h1>
+        <p class="lead">Herzlich willkommen bei Fussbalance. In meiner Praxis in Othmarsingen lade ich Sie ein, für einen Moment innezuhalten und sich und Ihren Füssen eine elegante Auszeit zu gönnen.</p>
+        <div class="btn-row">
+          <a href="#kontakt" class="btn btn-primary">Termin vereinbaren</a>
+          <a href="#leistungen" class="btn btn-ghost">Leistungen ansehen</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 420 460" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="210" cy="410" rx="150" ry="18" fill="#DFE5D6"/>
+          <path d="M210 60 C150 60 120 130 128 210 C133 258 160 270 158 320 C156 365 180 392 220 392 C262 392 288 360 282 315 C277 278 258 262 262 220 C266 172 274 140 262 108 C252 80 236 60 210 60 Z"
+                fill="none" stroke="#586048" stroke-width="2.5"/>
+          <path d="M150 105 C130 88 98 84 78 96" fill="none" stroke="#BE7F4C" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M78 96 C88 84 90 66 82 50" fill="none" stroke="#77886A" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M78 96 C64 100 50 94 44 80" fill="none" stroke="#77886A" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M78 96 C70 110 52 116 38 110" fill="none" stroke="#77886A" stroke-width="2.5" stroke-linecap="round"/>
+          <ellipse cx="82" cy="50" rx="9" ry="13" fill="#F6F3EC" stroke="#586048" stroke-width="2" transform="rotate(-30 82 50)"/>
+          <ellipse cx="44" cy="80" rx="9" ry="13" fill="#F6F3EC" stroke="#586048" stroke-width="2" transform="rotate(-70 44 80)"/>
+          <ellipse cx="38" cy="110" rx="9" ry="13" fill="#F6F3EC" stroke="#586048" stroke-width="2" transform="rotate(20 38 110)"/>
+          <circle cx="184" cy="118" r="7" fill="none" stroke="#586048" stroke-width="2"/>
+          <circle cx="222" cy="112" r="10" fill="none" stroke="#586048" stroke-width="2"/>
+          <circle cx="255" cy="130" r="6" fill="none" stroke="#586048" stroke-width="2"/>
+          <circle cx="198" cy="146" r="5" fill="none" stroke="#586048" stroke-width="2"/>
+          <circle cx="236" cy="150" r="6" fill="none" stroke="#586048" stroke-width="2"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="wrap">
+      <div>
+        <div class="quote-block">
+          <p>„Ich biete kosmetische Fusspflege an und bin keine medizinische Podologin.“</p>
+          <div class="who">Brigitte Baur, Praxisinhaberin</div>
+        </div>
+      </div>
+      <div class="about-body">
+        <div class="kicker">Mein Weg von den Blumen zu den Füssen</div>
+        <h3>Über Fussbalance</h3>
+        <p>Als gelernte Floristin habe ich mit wunderschönen Dingen gearbeitet und Menschen durch Blumen ein Lächeln geschenkt. Man steht viele Stunden am Tag auf den Füssen – und mir wurde bewusst, wie viel unsere Füsse eigentlich tragen müssen. Sie sind das Fundament unseres Körpers, das uns durch das ganze Leben trägt. Wenn die Füsse schmerzen, leidet die gesamte Lebensqualität.</p>
+        <p>Diese persönliche Erfahrung hat mich bewogen, eine Ausbildung zur kosmetischen Fusspflegerin zu absolvieren. Nach dem Abschluss im Juni 2026 bei der Dobi Academy habe ich mir einen Wunsch erfüllt und den Schritt in die Selbstständigkeit gewagt.</p>
+        <p>Ich möchte mein Bewusstsein für die Wichtigkeit der Fussgesundheit nutzen, um anderen Menschen direkt zu helfen. Denn gesunde Füsse sind die Basis für unser tägliches Wohlbefinden.</p>
+        <div class="signoff">
+          <div class="name">Brigitte Baur</div>
+          <div class="role">Dipl. kosmetische Fusspflegerin · Mitglied des Schweizerischen Fusspflegeverbands</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEISTUNGEN -->
+  <section class="services" id="leistungen">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Behandlungsangebote und Tarife</div>
+        <h2>Leistungen für Füsse und Hände</h2>
+        <p>Jeder Kunde wird mit einem desinfizierten und sterilisierten Schleifkörper behandelt.</p>
+      </div>
+
+      <!-- Pedicure -->
+      <div class="menu-group">
+        <div class="menu-group-title">
+          <h3>Pediküre</h3>
+          <span class="sub">Fusspflege</span>
+        </div>
+
+        <div class="menu-item">
+          <div class="name">Simply Balance — einfache Fusspflege</div>
+          <div class="price">CHF 70.–</div>
+          <div class="desc">Füsse desinfizieren, Nägel kürzen und in Form bringen, Nagelhäutchen entfernen, Hornhautbehandlung.</div>
+        </div>
+
+        <div class="menu-item">
+          <div class="name">Classic Balance — klassische Fusspflege</div>
+          <div class="price">CHF 90.–</div>
+          <div class="desc">Fussbad, Nägel kürzen und in Form bringen, Nagelhäutchen entfernen, Hornhautbehandlung, Druckstellen entfernen, Fussmassage.</div>
+        </div>
+
+        <div class="menu-item">
+          <div class="name">Classic Balance / Pure Elegance</div>
+          <div class="price">CHF 110.–</div>
+          <div class="desc">Klassische Fusspflege mit Nagellack: Unterlack, Nagellack, Überlack.</div>
+          <div class="note">Bitte bei dieser Behandlung offene Schuhe oder Flip-Flops mitbringen.</div>
+        </div>
+
+        <div class="menu-item">
+          <div class="name">Teilbehandlung</div>
+          <div class="price">CHF 55.–</div>
+        </div>
+
+        <div class="menu-item">
+          <div class="name">Nägel lackieren</div>
+          <div class="price">CHF 20.–</div>
+        </div>
+      </div>
+
+      <!-- Manicure -->
+      <div class="menu-group">
+        <div class="menu-group-title">
+          <h3>Maniküre</h3>
+          <span class="sub">Nagel- und Handpflege</span>
+        </div>
+
+        <div class="menu-item">
+          <div class="name">Klassische Nagel- und Handpflege</div>
+          <div class="price">CHF 70.–</div>
+          <div class="desc">Feilen, Nagelhaut zurückschieben, Massage, Lackieren (Unterlack, Nagellack, Überlack).</div>
+        </div>
+
+        <div class="menu-item">
+          <div class="name">Einfache Nagel- und Handpflege</div>
+          <div class="price">CHF 45.–</div>
+          <div class="desc">Feilen, Nagelhaut zurückschieben, Eincremen.</div>
+        </div>
+
+        <div class="menu-item">
+          <div class="name">Nägel lackieren</div>
+          <div class="price">CHF 20.–</div>
+          <div class="desc">Unterlack, Nagellack, Überlack.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GUTSCHEIN -->
+  <section class="gift" id="gutschein">
+    <div class="wrap">
+      <div>
+        <div class="kicker" style="color:#C9D4BC;">Schenken Sie Wohlbefinden</div>
+        <h2>Ein Gutschein für die Fusspflege</h2>
+        <p>Gepflegte und schöne Füsse sind ein Geschenk der Entspannung. Ob Geburtstag, Muttertag, Dankeschön oder Weihnachten — machen Sie Ihren Liebsten eine Freude.</p>
+        <span class="gift-amount">Geldbetrag frei wählbar</span>
+      </div>
+      <div>
+        <ol class="steps">
+          <li>Rufen Sie mich an oder schreiben Sie mir eine Nachricht.</li>
+          <li>Ich bereite den Gutschein für Sie vor.</li>
+          <li>Sie holen den Gutschein bei mir ab, oder ich schicke ihn Ihnen per Post zu.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- KONTAKT -->
+  <section class="contact" id="kontakt">
+    <div class="wrap">
+      <div>
+        <div class="section-head" style="margin-bottom:38px;">
+          <div class="kicker">Terminvereinbarung</div>
+          <h2>Kontakt &amp; Öffnungszeiten</h2>
+          <p>Termine nach Vereinbarung — rufen Sie mich an oder schreiben Sie mir eine Nachricht.</p>
+        </div>
+
+        <div class="info-block">
+          <h4>So erreichen Sie mich</h4>
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <a href="tel:+41792889803">079 288 98 03</a>
+          </div>
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Brigitte Baur, Ebnet 8, 5504 Othmarsingen</span>
+          </div>
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+            <span>Nachricht über das Kontaktformular</span>
+          </div>
+          <div class="info-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <span>Zahlung: Bargeld oder TWINT</span>
+          </div>
+        </div>
+
+        <div class="info-block">
+          <h4>Öffnungszeiten</h4>
+          <table class="hours-table">
+            <tr><td>Montag</td><td>8.00 – 18.00 Uhr</td></tr>
+            <tr><td>Dienstag</td><td>8.00 – 18.00 Uhr</td></tr>
+            <tr><td>Mittwoch</td><td>geschlossen</td></tr>
+            <tr><td>Donnerstag</td><td>8.00 – 18.00 Uhr</td></tr>
+            <tr><td>Freitag</td><td>8.00 – 12.00 Uhr</td></tr>
+            <tr><td>Samstag</td><td>8.00 – 12.00 Uhr</td></tr>
+          </table>
+        </div>
+
+        <div class="note-box">
+          Im Verhinderungsfall bitte 24 Stunden im Voraus abmelden. Ansonsten wird der volle Behandlungspreis berechnet.
+        </div>
+      </div>
+
+      <div>
+        <form id="contactForm">
+          <div class="form-row">
+            <div class="field">
+              <label for="vorname">Vorname</label>
+              <input type="text" id="vorname" name="vorname" required>
+            </div>
+            <div class="field">
+              <label for="nachname">Name</label>
+              <input type="text" id="nachname" name="nachname" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="adresse">Adresse</label>
+              <input type="text" id="adresse" name="adresse">
+            </div>
+            <div class="field">
+              <label for="ort">PLZ / Ort</label>
+              <input type="text" id="ort" name="ort">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="field">
+              <label for="email">E-Mail-Adresse</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="field">
+              <label for="telefon">Telefonnummer</label>
+              <input type="tel" id="telefon" name="telefon">
+            </div>
+          </div>
+          <div class="field">
+            <label for="nachricht">Nachricht</label>
+            <textarea id="nachricht" name="nachricht" placeholder="Ihr Wunschtermin, Behandlung oder Anliegen …"></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="submit-btn">Senden</button>
+            <span class="form-note">Ich melde mich zeitnah bei Ihnen zurück.</span>
+          </div>
+          <div class="form-confirm" id="formConfirm">Vielen Dank für Ihre Nachricht — ich melde mich in Kürze bei Ihnen.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ANFAHRT -->
+  <section class="location">
+    <div class="wrap">
+      <div>
+        <div class="kicker">Anfahrt</div>
+        <h3>Mit dem Auto gut erreichbar</h3>
+        <p>Reservierter Kundenparkplatz direkt vor der Praxis.</p>
+        <p>Ebnet 8, 5504 Othmarsingen</p>
+      </div>
+      <div class="map-frame">
+        <iframe title="Standort Fussbalance, Ebnet 8, 5504 Othmarsingen" loading="lazy"
+          src="https://www.google.com/maps?q=Ebnet+8,+5504+Othmarsingen&output=embed">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <div class="foot-brand">Fussbalance</div>
+      <div class="foot-addr">Brigitte Baur<br>Ebnet 8, 5504 Othmarsingen<br>079 288 98 03</div>
+    </div>
+    <div class="foot-links">
+      <a href="#about">Über mich</a>
+      <a href="#leistungen">Leistungen</a>
+      <a href="#gutschein">Gutschein</a>
+      <a href="#kontakt">Kontakt</a>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    © 2026 Fussbalance, Brigitte Baur. Kosmetische Fusspflege — keine medizinische Podologie.
+  </div>
+</footer>
+
+<script>
+  document.getElementById('menuToggle').addEventListener('click', function(){
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('.links a').forEach(function(a){
+    a.addEventListener('click', function(){ document.getElementById('navLinks').classList.remove('open'); });
+  });
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('formConfirm').classList.add('visible');
+    this.reset();
+  });
+</script>
+
+</body>
+</html>
