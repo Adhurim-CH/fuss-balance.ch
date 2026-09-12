@@ -55,12 +55,35 @@
     *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
   }
 
+  /* ---------- Motion ----------
+     One deliberate moment: the hero introduces itself on load, then the
+     foot-bath illustration keeps a slow, ambient life (gentle float + rising
+     steam). Everything else responds only to what the visitor does
+     (hover, tap, submit) rather than animating on scroll. */
+  @keyframes heroRise{
+    from{opacity:0; transform:translateY(18px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @keyframes gentleFloat{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-9px);}
+  }
+  @keyframes steamRise{
+    0%{opacity:.16; transform:translateY(0);}
+    50%{opacity:.55; transform:translateY(-8px);}
+    100%{opacity:.16; transform:translateY(-15px);}
+  }
+
   /* ---------- Header ---------- */
   header{
     position:sticky; top:0; z-index:50;
     background:rgba(246,243,236,0.92);
     backdrop-filter:blur(6px);
     border-bottom:1px solid var(--line);
+    transition:box-shadow .3s ease;
+  }
+  header.scrolled{
+    box-shadow:0 10px 24px -8px rgba(63,54,45,0.14);
   }
   .nav{
     display:flex; align-items:center; justify-content:space-between;
@@ -73,10 +96,18 @@
   .logo span{color:var(--clay);}
   nav.links{display:flex; gap:34px; align-items:center;}
   nav.links a{
+    position:relative;
     text-decoration:none; font-size:15px; color:var(--brown-soft);
+    padding-bottom:3px;
     transition:color .2s ease;
   }
+  nav.links a::after{
+    content:''; position:absolute; left:0; bottom:0; width:100%; height:1px;
+    background:var(--sage-dark); transform:scaleX(0); transform-origin:left;
+    transition:transform .25s ease;
+  }
   nav.links a:hover{color:var(--sage-dark);}
+  nav.links a:hover::after{transform:scaleX(1);}
   .nav-phone{
     font-size:15px; color:var(--sage-dark); text-decoration:none; font-weight:500;
     display:flex; align-items:center; gap:8px;
@@ -88,10 +119,13 @@
       position:absolute; top:100%; left:0; right:0;
       flex-direction:column; background:var(--cream);
       border-bottom:1px solid var(--line);
-      padding:18px 32px 26px; gap:16px;
-      display:none;
+      padding:0 32px; gap:16px;
+      max-height:0; opacity:0; overflow:hidden;
+      transition:max-height .35s ease, opacity .3s ease, padding .35s ease;
     }
-    nav.links.open{display:flex;}
+    nav.links.open{
+      max-height:320px; opacity:1; padding:18px 32px 26px;
+    }
     .menu-toggle{display:block;}
     .nav-phone{display:none;}
   }
@@ -108,6 +142,7 @@
   @media (max-width:860px){ .hero .wrap{grid-template-columns:1fr;} .hero-art{order:-1;} }
   .eyebrow-line{
     display:flex; align-items:center; gap:12px; margin-bottom:22px;
+    opacity:0; animation:heroRise .8s cubic-bezier(.22,.61,.36,1) .05s forwards;
   }
   .eyebrow-line .dash{width:28px; height:1px; background:var(--clay);}
   .eyebrow-line span{font-size:14px; color:var(--brown-soft); letter-spacing:0.02em;}
@@ -115,12 +150,17 @@
     font-size:clamp(40px, 6vw, 64px);
     line-height:1.05;
     margin-bottom:24px;
+    opacity:0; animation:heroRise .8s cubic-bezier(.22,.61,.36,1) .18s forwards;
   }
   .hero h1 em{font-style:italic; color:var(--clay);}
   .hero p.lead{
     font-size:19px; color:var(--brown-soft); max-width:46ch; margin-bottom:34px;
+    opacity:0; animation:heroRise .8s cubic-bezier(.22,.61,.36,1) .34s forwards;
   }
-  .btn-row{display:flex; gap:16px; flex-wrap:wrap;}
+  .btn-row{
+    display:flex; gap:16px; flex-wrap:wrap;
+    opacity:0; animation:heroRise .8s cubic-bezier(.22,.61,.36,1) .5s forwards;
+  }
   .btn{
     display:inline-flex; align-items:center; gap:10px;
     padding:14px 28px; border-radius:var(--radius);
@@ -132,8 +172,19 @@
   .btn-ghost{background:transparent; color:var(--sage-dark); border:1px solid var(--taupe);}
   .btn-ghost:hover{border-color:var(--sage-dark); transform:translateY(-2px);}
 
-  .hero-art{position:relative;}
+  .hero-art{
+    position:relative;
+    opacity:0; animation:heroRise 1s cubic-bezier(.22,.61,.36,1) .28s forwards;
+  }
   .hero-art svg{width:100%; height:auto;}
+  .hero-art .float-group{
+    animation:gentleFloat 6s ease-in-out infinite;
+    animation-delay:1.2s;
+  }
+  .hero-art .steam-wisp{animation:steamRise 4.5s ease-in-out infinite;}
+  .hero-art .steam-wisp-1{animation-delay:1.2s;}
+  .hero-art .steam-wisp-2{animation-delay:2.5s;}
+  .hero-art .steam-wisp-3{animation-delay:3.8s;}
 
   /* ---------- Section labels ---------- */
   .kicker{
@@ -179,9 +230,11 @@
   .menu-group-title .sub{font-size:14px; color:var(--brown-soft);}
   .menu-item{
     display:grid; grid-template-columns:1fr auto; gap:10px 20px;
-    padding:22px 0; border-bottom:1px solid var(--line);
+    padding:22px 18px; margin:0 -18px; border-bottom:1px solid var(--line);
     align-items:baseline;
+    transition:background-color .25s ease;
   }
+  .menu-item:hover{background-color:rgba(119,136,106,0.06);}
   .menu-item:last-child{border-bottom:none;}
   .menu-item .name{font-family:'Fraunces', serif; font-size:19px; color:var(--brown);}
   .menu-item .price{font-family:'Fraunces', serif; font-size:19px; color:var(--sage-dark); white-space:nowrap;}
@@ -258,10 +311,14 @@
   }
   .submit-btn:hover{transform:translateY(-2px);}
   .form-confirm{
-    display:none; margin-top:16px; padding:14px 18px; background:var(--sage-mist);
+    margin-top:0; padding:0 18px; background:var(--sage-mist);
     border-left:3px solid var(--sage); font-size:14.5px; color:var(--sage-dark);
+    max-height:0; opacity:0; overflow:hidden;
+    transition:max-height .45s ease, opacity .4s ease, padding .45s ease, margin-top .45s ease;
   }
-  .form-confirm.visible{display:block;}
+  .form-confirm.visible{
+    max-height:120px; opacity:1; padding:14px 18px; margin-top:16px;
+  }
 
   /* ---------- Anfahrt ---------- */
   .location{background:var(--taupe-light);}
@@ -327,21 +384,26 @@
       </div>
       <div class="hero-art" aria-hidden="true">
         <svg viewBox="0 0 420 460" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="210" cy="410" rx="150" ry="18" fill="#DFE5D6"/>
-          <path d="M210 60 C150 60 120 130 128 210 C133 258 160 270 158 320 C156 365 180 392 220 392 C262 392 288 360 282 315 C277 278 258 262 262 220 C266 172 274 140 262 108 C252 80 236 60 210 60 Z"
-                fill="none" stroke="#586048" stroke-width="2.5"/>
-          <path d="M150 105 C130 88 98 84 78 96" fill="none" stroke="#BE7F4C" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M78 96 C88 84 90 66 82 50" fill="none" stroke="#77886A" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M78 96 C64 100 50 94 44 80" fill="none" stroke="#77886A" stroke-width="2.5" stroke-linecap="round"/>
-          <path d="M78 96 C70 110 52 116 38 110" fill="none" stroke="#77886A" stroke-width="2.5" stroke-linecap="round"/>
-          <ellipse cx="82" cy="50" rx="9" ry="13" fill="#F6F3EC" stroke="#586048" stroke-width="2" transform="rotate(-30 82 50)"/>
-          <ellipse cx="44" cy="80" rx="9" ry="13" fill="#F6F3EC" stroke="#586048" stroke-width="2" transform="rotate(-70 44 80)"/>
-          <ellipse cx="38" cy="110" rx="9" ry="13" fill="#F6F3EC" stroke="#586048" stroke-width="2" transform="rotate(20 38 110)"/>
-          <circle cx="184" cy="118" r="7" fill="none" stroke="#586048" stroke-width="2"/>
-          <circle cx="222" cy="112" r="10" fill="none" stroke="#586048" stroke-width="2"/>
-          <circle cx="255" cy="130" r="6" fill="none" stroke="#586048" stroke-width="2"/>
-          <circle cx="198" cy="146" r="5" fill="none" stroke="#586048" stroke-width="2"/>
-          <circle cx="236" cy="150" r="6" fill="none" stroke="#586048" stroke-width="2"/>
+          <ellipse cx="210" cy="428" rx="148" ry="14" fill="#DFE5D6"/>
+          <g class="float-group">
+            <path d="M76,304 C60,320 60,368 84,388 C120,408 300,408 336,388 C360,368 360,320 344,304"
+                  fill="none" stroke="#586048" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M210 60 C150 60 120 130 128 210 C133 258 160 270 158 320 C156 365 180 392 220 392 C262 392 288 360 282 315 C277 278 258 262 262 220 C266 172 274 140 262 108 C252 80 236 60 210 60 Z"
+                  fill="none" stroke="#586048" stroke-width="2.5"/>
+            <path d="M70,392 C58,372 50,346 54,320" fill="none" stroke="#77886A" stroke-width="2" stroke-linecap="round"/>
+            <ellipse cx="58" cy="360" rx="14" ry="6" fill="none" stroke="#BE7F4C" stroke-width="1.8" transform="rotate(-35 58 360)"/>
+            <ellipse cx="48" cy="335" rx="13" ry="5.5" fill="none" stroke="#BE7F4C" stroke-width="1.8" transform="rotate(-55 48 335)"/>
+            <ellipse cx="66" cy="330" rx="12" ry="5" fill="none" stroke="#77886A" stroke-width="1.8" transform="rotate(30 66 330)"/>
+            <ellipse cx="210" cy="300" rx="134" ry="20" fill="#DFE5D6" fill-opacity="0.88" stroke="#586048" stroke-width="2"/>
+            <ellipse cx="210" cy="303" rx="92" ry="12" fill="none" stroke="#586048" stroke-width="1.2" opacity="0.35"/>
+            <ellipse cx="210" cy="306" rx="52" ry="7" fill="none" stroke="#586048" stroke-width="1.2" opacity="0.3"/>
+            <circle cx="120" cy="298" r="4" fill="#F6F3EC" stroke="#586048" stroke-width="1.2"/>
+            <circle cx="300" cy="296" r="3" fill="#F6F3EC" stroke="#586048" stroke-width="1.2"/>
+            <circle cx="270" cy="309" r="2.5" fill="#F6F3EC" stroke="#586048" stroke-width="1"/>
+            <path class="steam-wisp steam-wisp-1" d="M182,278 C176,262 190,254 184,238" fill="none" stroke="#77886A" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+            <path class="steam-wisp steam-wisp-2" d="M206,272 C200,254 214,246 208,228" fill="none" stroke="#77886A" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+            <path class="steam-wisp steam-wisp-3" d="M232,276 C238,258 224,250 230,234" fill="none" stroke="#77886A" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
+          </g>
         </svg>
       </div>
     </div>
@@ -606,6 +668,12 @@
     document.getElementById('formConfirm').classList.add('visible');
     this.reset();
   });
+  var siteHeader = document.querySelector('header');
+  var onScroll = function(){
+    siteHeader.classList.toggle('scrolled', window.scrollY > 12);
+  };
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
 </script>
 
 </body>
