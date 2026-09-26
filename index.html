@@ -56,22 +56,12 @@
   }
 
   /* ---------- Motion ----------
-     One deliberate moment: the hero introduces itself on load, then the
-     foot-bath illustration keeps a slow, ambient life (gentle float + rising
-     steam). Everything else responds only to what the visitor does
-     (hover, tap, submit) rather than animating on scroll. */
+     One deliberate moment: the hero introduces itself on load. Everything
+     else responds only to what the visitor does (hover, tap, submit)
+     rather than animating on scroll. */
   @keyframes heroRise{
     from{opacity:0; transform:translateY(18px);}
     to{opacity:1; transform:translateY(0);}
-  }
-  @keyframes gentleFloat{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-9px);}
-  }
-  @keyframes steamRise{
-    0%{opacity:.16; transform:translateY(0);}
-    50%{opacity:.55; transform:translateY(-8px);}
-    100%{opacity:.16; transform:translateY(-15px);}
   }
 
   /* ---------- Header ---------- */
@@ -176,15 +166,13 @@
     position:relative;
     opacity:0; animation:heroRise 1s cubic-bezier(.22,.61,.36,1) .28s forwards;
   }
-  .hero-art svg{width:100%; height:auto;}
-  .hero-art .float-group{
-    animation:gentleFloat 6s ease-in-out infinite;
-    animation-delay:1.2s;
+  .hero-art img{
+    width:100%; height:100%;
+    aspect-ratio:4/5;
+    object-fit:cover;
+    border-radius:var(--radius);
+    border:1px solid var(--line);
   }
-  .hero-art .steam-wisp{animation:steamRise 4.5s ease-in-out infinite;}
-  .hero-art .steam-wisp-1{animation-delay:1.2s;}
-  .hero-art .steam-wisp-2{animation-delay:2.5s;}
-  .hero-art .steam-wisp-3{animation-delay:3.8s;}
 
   /* ---------- Section labels ---------- */
   .kicker{
@@ -382,29 +370,8 @@
           <a href="#leistungen" class="btn btn-ghost">Leistungen ansehen</a>
         </div>
       </div>
-      <div class="hero-art" aria-hidden="true">
-        <svg viewBox="0 0 420 460" xmlns="http://www.w3.org/2000/svg">
-          <ellipse cx="210" cy="428" rx="148" ry="14" fill="#DFE5D6"/>
-          <g class="float-group">
-            <path d="M76,304 C60,320 60,368 84,388 C120,408 300,408 336,388 C360,368 360,320 344,304"
-                  fill="none" stroke="#586048" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M210 60 C150 60 120 130 128 210 C133 258 160 270 158 320 C156 365 180 392 220 392 C262 392 288 360 282 315 C277 278 258 262 262 220 C266 172 274 140 262 108 C252 80 236 60 210 60 Z"
-                  fill="none" stroke="#586048" stroke-width="2.5"/>
-            <path d="M70,392 C58,372 50,346 54,320" fill="none" stroke="#77886A" stroke-width="2" stroke-linecap="round"/>
-            <ellipse cx="58" cy="360" rx="14" ry="6" fill="none" stroke="#BE7F4C" stroke-width="1.8" transform="rotate(-35 58 360)"/>
-            <ellipse cx="48" cy="335" rx="13" ry="5.5" fill="none" stroke="#BE7F4C" stroke-width="1.8" transform="rotate(-55 48 335)"/>
-            <ellipse cx="66" cy="330" rx="12" ry="5" fill="none" stroke="#77886A" stroke-width="1.8" transform="rotate(30 66 330)"/>
-            <ellipse cx="210" cy="300" rx="134" ry="20" fill="#DFE5D6" fill-opacity="0.88" stroke="#586048" stroke-width="2"/>
-            <ellipse cx="210" cy="303" rx="92" ry="12" fill="none" stroke="#586048" stroke-width="1.2" opacity="0.35"/>
-            <ellipse cx="210" cy="306" rx="52" ry="7" fill="none" stroke="#586048" stroke-width="1.2" opacity="0.3"/>
-            <circle cx="120" cy="298" r="4" fill="#F6F3EC" stroke="#586048" stroke-width="1.2"/>
-            <circle cx="300" cy="296" r="3" fill="#F6F3EC" stroke="#586048" stroke-width="1.2"/>
-            <circle cx="270" cy="309" r="2.5" fill="#F6F3EC" stroke="#586048" stroke-width="1"/>
-            <path class="steam-wisp steam-wisp-1" d="M182,278 C176,262 190,254 184,238" fill="none" stroke="#77886A" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
-            <path class="steam-wisp steam-wisp-2" d="M206,272 C200,254 214,246 208,228" fill="none" stroke="#77886A" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
-            <path class="steam-wisp steam-wisp-3" d="M232,276 C238,258 224,250 230,234" fill="none" stroke="#77886A" stroke-width="2" stroke-linecap="round" opacity="0.4"/>
-          </g>
-        </svg>
+      <div class="hero-art">
+        <img src="images/hero.jpg" alt="Brigitte Baur bei der Fusspflege in der Praxis FUSSBALANCE">
       </div>
     </div>
   </section>
