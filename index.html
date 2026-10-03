@@ -2,10 +2,13 @@
 <html lang="de-CH">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F6F3EC">
+<meta name="format-detection" content="telephone=no">
 <title>FUSSBALANCE – Kosmetische Fusspflege in Othmarsingen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -21,38 +24,61 @@
     --clay:#BE7F4C;
     --line:#D8CFBE;
     --radius:2px;
+
+    --header-h:68px;
+    --gutter:clamp(20px, 5vw, 32px);
+    --section-y:clamp(60px, 10vw, 96px);
+    --ease:cubic-bezier(.22,.61,.36,1);
+    --font-serif:'Fraunces', Georgia, 'Times New Roman', serif;
+    --font-sans:'Work Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   }
-  *{box-sizing:border-box;}
-  html{scroll-behavior:smooth;}
+
+  /* ---------- Base ---------- */
+  *,*::before,*::after{box-sizing:border-box;}
+  html{
+    scroll-behavior:smooth;
+    scroll-padding-top:calc(var(--header-h) + 12px);
+    -webkit-text-size-adjust:100%;
+    text-size-adjust:100%;
+  }
   body{
     margin:0;
     background:var(--cream);
     color:var(--brown);
-    font-family:'Work Sans', sans-serif;
+    font-family:var(--font-sans);
     font-weight:400;
+    font-size:16px;
     line-height:1.65;
     -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    -webkit-tap-highlight-color:transparent;
+    text-rendering:optimizeLegibility;
+    overflow-x:hidden;
   }
-  h1,h2,h3{
-    font-family:'Fraunces', serif;
+  h1,h2,h3,h4{
+    font-family:var(--font-serif);
     font-weight:500;
     color:var(--sage-dark);
     margin:0;
     letter-spacing:-0.01em;
+    overflow-wrap:break-word;
+    hyphens:auto;
   }
+  p{margin:0 0 1em;}
   a{color:inherit;}
-  img,svg{display:block;max-width:100%;}
-  .wrap{max-width:1080px;margin:0 auto;padding:0 32px;}
-  section{padding:96px 0;}
-  @media (max-width:640px){ section{padding:64px 0;} .wrap{padding:0 22px;} }
+  img,svg,iframe{display:block;max-width:100%;}
+  button{font:inherit;}
+
+  .wrap{
+    max-width:1080px; margin:0 auto;
+    padding-left:max(var(--gutter), env(safe-area-inset-left));
+    padding-right:max(var(--gutter), env(safe-area-inset-right));
+  }
+  section{padding:var(--section-y) 0;}
 
   /* focus visibility */
   a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible{
     outline:2px solid var(--clay); outline-offset:3px;
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
   }
 
   /* ---------- Motion ----------
@@ -63,32 +89,45 @@
     from{opacity:0; transform:translateY(18px);}
     to{opacity:1; transform:translateY(0);}
   }
+  .rise{opacity:0; animation:heroRise .8s var(--ease) forwards;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *,*::before,*::after{
+      animation-duration:0.001ms !important; animation-iteration-count:1 !important;
+      transition-duration:0.001ms !important;
+    }
+    .rise{opacity:1; animation:none;}
+  }
 
   /* ---------- Header ---------- */
   header{
     position:sticky; top:0; z-index:50;
     background:rgba(246,243,236,0.92);
+    -webkit-backdrop-filter:blur(6px);
     backdrop-filter:blur(6px);
     border-bottom:1px solid var(--line);
+    padding-top:env(safe-area-inset-top);
     transition:box-shadow .3s ease;
   }
-  header.scrolled{
-    box-shadow:0 10px 24px -8px rgba(63,54,45,0.14);
-  }
+  header.scrolled{box-shadow:0 10px 24px -8px rgba(63,54,45,0.14);}
   .nav{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:18px 32px; max-width:1080px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between; gap:20px;
+    min-height:var(--header-h);
+    max-width:1080px; margin:0 auto;
+    padding:0 max(var(--gutter), env(safe-area-inset-right)) 0 max(var(--gutter), env(safe-area-inset-left));
   }
   .logo{
-    font-family:'Fraunces', serif; font-size:22px; font-weight:600;
+    font-family:var(--font-serif); font-size:22px; font-weight:600;
     color:var(--sage-dark); text-decoration:none; letter-spacing:0.01em;
+    padding:8px 0;
   }
   .logo span{color:var(--clay);}
   nav.links{display:flex; gap:34px; align-items:center;}
   nav.links a{
     position:relative;
     text-decoration:none; font-size:15px; color:var(--brown-soft);
-    padding-bottom:3px;
+    padding:6px 0 3px;
     transition:color .2s ease;
   }
   nav.links a::after{
@@ -96,155 +135,177 @@
     background:var(--sage-dark); transform:scaleX(0); transform-origin:left;
     transition:transform .25s ease;
   }
-  nav.links a:hover{color:var(--sage-dark);}
-  nav.links a:hover::after{transform:scaleX(1);}
   .nav-phone{
     font-size:15px; color:var(--sage-dark); text-decoration:none; font-weight:500;
-    display:flex; align-items:center; gap:8px;
+    display:flex; align-items:center; gap:8px; white-space:nowrap;
+    padding:8px 0;
   }
-  .menu-toggle{display:none; background:none; border:none; cursor:pointer; padding:6px;}
-  .menu-toggle svg{width:24px; height:24px; stroke:var(--sage-dark);}
+  .menu-toggle{
+    display:none; background:none; border:none; cursor:pointer;
+    width:44px; height:44px; margin-right:-10px;
+    align-items:center; justify-content:center; color:var(--sage-dark);
+  }
+  .menu-toggle svg{width:24px; height:24px;}
+  .menu-toggle .icon-close{display:none;}
+  .menu-toggle[aria-expanded="true"] .icon-open{display:none;}
+  .menu-toggle[aria-expanded="true"] .icon-close{display:block;}
+
   @media (max-width:820px){
+    :root{--header-h:60px;}
     nav.links{
       position:absolute; top:100%; left:0; right:0;
-      flex-direction:column; background:var(--cream);
+      flex-direction:column; align-items:stretch; gap:0;
+      background:var(--cream);
       border-bottom:1px solid var(--line);
-      padding:0 32px; gap:16px;
-      max-height:0; opacity:0; overflow:hidden;
-      transition:max-height .35s ease, opacity .3s ease, padding .35s ease;
+      box-shadow:0 14px 24px -12px rgba(63,54,45,0.18);
+      padding:0 var(--gutter);
+      max-height:0; opacity:0; overflow:hidden; visibility:hidden;
+      transition:max-height .35s ease, opacity .3s ease, padding .35s ease, visibility 0s linear .35s;
     }
     nav.links.open{
-      max-height:320px; opacity:1; padding:18px 32px 26px;
+      max-height:360px; opacity:1; visibility:visible;
+      padding:8px var(--gutter) 16px;
+      transition:max-height .35s ease, opacity .3s ease, padding .35s ease, visibility 0s;
     }
-    .menu-toggle{display:block;}
+    nav.links a{
+      font-size:17px; padding:14px 0;
+      border-bottom:1px solid var(--line);
+    }
+    nav.links a:last-child{border-bottom:none;}
+    nav.links a::after{display:none;}
+    .menu-toggle{display:inline-flex;}
     .nav-phone{display:none;}
   }
 
   /* ---------- Hero ---------- */
   .hero{
-    padding:76px 0 40px;
+    padding:clamp(36px, 8vw, 76px) 0 clamp(32px, 5vw, 40px);
     position:relative;
     overflow:hidden;
   }
   .hero .wrap{
-    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center;
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:clamp(32px, 5vw, 56px); align-items:center;
   }
-  @media (max-width:860px){ .hero .wrap{grid-template-columns:1fr;} .hero-art{order:-1;} }
   .eyebrow-line{
     display:flex; align-items:center; gap:12px; margin-bottom:22px;
-    opacity:0; animation:heroRise .8s cubic-bezier(.22,.61,.36,1) .05s forwards;
+    animation-delay:.05s;
   }
-  .eyebrow-line .dash{width:28px; height:1px; background:var(--clay);}
-  .eyebrow-line span{font-size:14px; color:var(--brown-soft); letter-spacing:0.02em;}
+  .eyebrow-line .dash{flex:0 0 28px; height:1px; background:var(--clay);}
+  .eyebrow-line span:last-child{font-size:14px; color:var(--brown-soft); letter-spacing:0.02em;}
   .hero h1{
-    font-size:clamp(40px, 6vw, 64px);
+    font-size:clamp(36px, 6vw, 64px);
     line-height:1.05;
     margin-bottom:24px;
-    opacity:0; animation:heroRise .8s cubic-bezier(.22,.61,.36,1) .18s forwards;
+    animation-delay:.18s;
   }
   .hero h1 em{font-style:italic; color:var(--clay);}
   .hero p.lead{
-    font-size:19px; color:var(--brown-soft); max-width:46ch; margin-bottom:34px;
-    opacity:0; animation:heroRise .8s cubic-bezier(.22,.61,.36,1) .34s forwards;
+    font-size:clamp(17px, 2.2vw, 19px); color:var(--brown-soft); max-width:46ch; margin-bottom:34px;
+    animation-delay:.34s;
   }
   .btn-row{
     display:flex; gap:16px; flex-wrap:wrap;
-    opacity:0; animation:heroRise .8s cubic-bezier(.22,.61,.36,1) .5s forwards;
+    animation-delay:.5s;
   }
   .btn{
-    display:inline-flex; align-items:center; gap:10px;
-    padding:14px 28px; border-radius:var(--radius);
-    text-decoration:none; font-size:15px; font-weight:500;
-    transition:transform .18s ease, box-shadow .18s ease;
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    min-height:48px; padding:14px 28px; border-radius:var(--radius);
+    text-decoration:none; font-size:15px; font-weight:500; text-align:center;
+    transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
   .btn-primary{background:var(--sage-dark); color:var(--cream);}
-  .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(88,96,72,0.28);}
   .btn-ghost{background:transparent; color:var(--sage-dark); border:1px solid var(--taupe);}
-  .btn-ghost:hover{border-color:var(--sage-dark); transform:translateY(-2px);}
+  .btn:active{transform:translateY(1px);}
 
-  .hero-art{
-    position:relative;
-    opacity:0; animation:heroRise 1s cubic-bezier(.22,.61,.36,1) .28s forwards;
-  }
+  .hero-art{position:relative; animation-duration:1s; animation-delay:.28s;}
   .hero-art img{
-    width:100%; height:100%;
+    width:100%; height:auto;
     aspect-ratio:4/5;
     object-fit:cover;
     border-radius:var(--radius);
     border:1px solid var(--line);
+    background:var(--cream-deep);
+  }
+
+  @media (max-width:860px){
+    .hero .wrap{grid-template-columns:1fr;}
+    .hero-art{order:-1;}
+    .hero-art img{aspect-ratio:4/3; max-height:60vh;}
+  }
+  @media (max-width:480px){
+    .btn-row{flex-direction:column;}
+    .btn-row .btn{width:100%;}
   }
 
   /* ---------- Section labels ---------- */
-  .kicker{
-    font-size:15px; color:var(--clay); margin-bottom:10px; font-weight:500;
-  }
-  .section-head{max-width:56ch; margin-bottom:52px;}
+  .kicker{font-size:15px; color:var(--clay); margin-bottom:10px; font-weight:500;}
+  .section-head{max-width:56ch; margin-bottom:clamp(36px, 6vw, 52px);}
   .section-head h2{font-size:clamp(28px,3.6vw,38px); line-height:1.15;}
-  .section-head p{color:var(--brown-soft); margin-top:14px; font-size:17px;}
+  .section-head p{color:var(--brown-soft); margin:14px 0 0; font-size:17px;}
 
   /* ---------- About ---------- */
   .about{background:var(--sage-mist);}
-  .about .wrap{display:grid; grid-template-columns:0.85fr 1.15fr; gap:64px; align-items:start;}
-  @media (max-width:860px){ .about .wrap{grid-template-columns:1fr;} }
+  .about .wrap{display:grid; grid-template-columns:0.85fr 1.15fr; gap:clamp(36px, 6vw, 64px); align-items:start;}
   .quote-block{
     background:var(--cream); border:1px solid var(--line);
-    padding:36px 32px; position:relative;
+    padding:clamp(26px, 4vw, 36px) clamp(22px, 4vw, 32px); position:relative;
   }
+  figure.quote-block, .quote-block blockquote{margin:0;}
   .quote-block p{
-    font-family:'Fraunces', serif; font-style:italic; font-size:20px;
+    font-family:var(--font-serif); font-style:italic; font-size:clamp(18px, 2.4vw, 20px);
     color:var(--sage-dark); line-height:1.5; margin:0;
   }
   .quote-block .who{
-    margin-top:18px; font-family:'Work Sans', sans-serif; font-style:normal;
+    margin-top:18px; font-family:var(--font-sans); font-style:normal;
     font-size:14px; color:var(--brown-soft);
   }
-  .about-body h3{font-size:24px; margin-bottom:18px;}
+  .about-body h3{font-size:clamp(22px, 3vw, 24px); margin-bottom:18px;}
   .about-body p{color:var(--brown-soft); margin-bottom:16px; font-size:16px;}
-  .signoff{
-    margin-top:28px; padding-top:22px; border-top:1px solid var(--taupe);
-  }
-  .signoff .name{font-family:'Fraunces', serif; font-size:19px; color:var(--sage-dark);}
+  .signoff{margin-top:28px; padding-top:22px; border-top:1px solid var(--taupe);}
+  .signoff .name{font-family:var(--font-serif); font-size:19px; color:var(--sage-dark);}
   .signoff .role{font-size:14px; color:var(--brown-soft); margin-top:4px;}
+  @media (min-width:861px){
+    .about .quote-block{position:sticky; top:calc(var(--header-h) + 24px);}
+  }
+  @media (max-width:860px){ .about .wrap{grid-template-columns:1fr;} }
 
   /* ---------- Services (menu style) ---------- */
-  .services .section-head{margin-bottom:64px;}
-  .menu-group{margin-bottom:64px;}
+  .services .section-head{margin-bottom:clamp(40px, 7vw, 64px);}
+  .menu-group{margin-bottom:clamp(44px, 7vw, 64px);}
   .menu-group:last-child{margin-bottom:0;}
   .menu-group-title{
-    display:flex; align-items:baseline; gap:16px; margin-bottom:8px;
+    display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 16px; margin-bottom:8px;
     border-bottom:1px solid var(--taupe); padding-bottom:14px;
   }
   .menu-group-title h3{font-size:22px; color:var(--sage-dark);}
+  .menu-group-title h3 + h3{font-family:var(--font-sans); font-size:14px; font-weight:400; color:var(--brown-soft); letter-spacing:0;}
   .menu-group-title .sub{font-size:14px; color:var(--brown-soft);}
   .menu-item{
-    display:grid; grid-template-columns:1fr auto; gap:10px 20px;
+    display:grid; grid-template-columns:1fr auto; gap:8px 20px;
     padding:22px 18px; margin:0 -18px; border-bottom:1px solid var(--line);
     align-items:baseline;
     transition:background-color .25s ease;
   }
-  .menu-item:hover{background-color:rgba(119,136,106,0.06);}
   .menu-item:last-child{border-bottom:none;}
-  .menu-item .name{font-family:'Fraunces', serif; font-size:19px; color:var(--brown);}
-  .menu-item .price{font-family:'Fraunces', serif; font-size:19px; color:var(--sage-dark); white-space:nowrap;}
+  .menu-item .name{font-family:var(--font-serif); font-size:19px; line-height:1.35; color:var(--brown);}
+  .menu-item .price{font-family:var(--font-serif); font-size:19px; color:var(--sage-dark); white-space:nowrap; font-variant-numeric:tabular-nums;}
   .menu-item .desc{grid-column:1 / -1; color:var(--brown-soft); font-size:15px; max-width:60ch;}
   .menu-item .note{grid-column:1 / -1; color:var(--clay); font-size:14px; font-style:italic;}
-  .menu-footnote{
-    margin-top:6px; font-size:14px; color:var(--brown-soft);
-    display:flex; gap:10px; align-items:flex-start;
+  @media (max-width:640px){
+    .menu-item{padding:18px 0; margin:0; gap:6px 14px;}
+    .menu-item .name, .menu-item .price{font-size:17.5px;}
   }
-  .menu-footnote svg{flex:0 0 auto; width:18px; height:18px; margin-top:2px; stroke:var(--sage);}
 
   /* ---------- Gutschein band ---------- */
-  .gift{
-    background:var(--sage-dark); color:var(--cream); position:relative; overflow:hidden;
-  }
-  .gift .wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
-  @media (max-width:860px){ .gift .wrap{grid-template-columns:1fr;} }
-  .gift h2{color:var(--cream); font-size:clamp(28px,3.6vw,36px); margin-bottom:16px;}
-  .gift p{color:#E4E2D7; font-size:17px; max-width:44ch;}
+  .gift{background:var(--sage-dark); color:var(--cream); position:relative; overflow:hidden;}
+  .gift .wrap{display:grid; grid-template-columns:1fr 1fr; gap:clamp(36px, 5vw, 56px); align-items:center;}
+  .gift .kicker{color:#C9D4BC;}
+  .gift h2{color:var(--cream); font-size:clamp(28px,3.6vw,36px); line-height:1.15; margin-bottom:16px;}
+  .gift p{color:#E4E2D7; font-size:17px; max-width:44ch; margin:0;}
   .steps{list-style:none; margin:0; padding:0; counter-reset:step;}
   .steps li{
-    counter-increment:step; position:relative; padding-left:44px; margin-bottom:24px; font-size:16px; color:#EDEAE0;
+    counter-increment:step; position:relative; padding-left:46px; margin-bottom:24px;
+    font-size:16px; color:#EDEAE0; min-height:30px;
   }
   .steps li:last-child{margin-bottom:0;}
   .steps li::before{
@@ -252,106 +313,139 @@
     position:absolute; left:0; top:-2px;
     width:30px; height:30px; border:1px solid #A9B49B; border-radius:50%;
     display:flex; align-items:center; justify-content:center;
-    font-family:'Fraunces', serif; font-size:14px; color:var(--cream);
+    font-family:var(--font-serif); font-size:14px; color:var(--cream);
   }
   .gift-amount{
     display:inline-block; margin-top:24px; padding:10px 20px;
     border:1px solid #A9B49B; font-size:14px; color:var(--cream);
   }
+  @media (max-width:860px){ .gift .wrap{grid-template-columns:1fr;} }
 
   /* ---------- Contact ---------- */
-  .contact .wrap{display:grid; grid-template-columns:0.95fr 1.05fr; gap:64px; align-items:start;}
-  @media (max-width:900px){ .contact .wrap{grid-template-columns:1fr;} }
+  .contact .wrap{display:grid; grid-template-columns:0.95fr 1.05fr; gap:clamp(40px, 6vw, 64px); align-items:start;}
+  .contact .section-head{margin-bottom:38px;}
   .info-block{margin-bottom:36px;}
   .info-block h4{
-    font-size:13px; text-transform:none; letter-spacing:0.02em; color:var(--clay);
-    margin:0 0 12px; font-weight:600; font-family:'Work Sans', sans-serif;
+    font-size:13px; letter-spacing:0.02em; color:var(--clay);
+    margin:0 0 12px; font-weight:600; font-family:var(--font-sans);
   }
-  .info-row{display:flex; gap:12px; margin-bottom:10px; font-size:16px; color:var(--brown);}
-  .info-row svg{flex:0 0 auto; width:19px; height:19px; stroke:var(--sage-dark); margin-top:2px;}
+  .info-row{display:flex; gap:12px; margin-bottom:10px; font-size:16px; color:var(--brown); align-items:flex-start;}
+  .info-row svg{flex:0 0 auto; width:19px; height:19px; color:var(--sage-dark); margin-top:3px;}
+  .info-row a{text-decoration:none; border-bottom:1px solid var(--taupe);}
   .hours-table{width:100%; border-collapse:collapse; margin-top:6px;}
-  .hours-table td{padding:7px 0; font-size:15px; border-bottom:1px solid var(--line);}
-  .hours-table td:first-child{color:var(--brown-soft);}
-  .hours-table td:last-child{text-align:right; color:var(--brown); font-weight:500;}
+  .hours-table td{padding:9px 0; font-size:15px; border-bottom:1px solid var(--line);}
+  .hours-table td:first-child{color:var(--brown-soft); padding-right:16px;}
+  .hours-table td:last-child{text-align:right; color:var(--brown); font-weight:500; white-space:nowrap; font-variant-numeric:tabular-nums;}
   .hours-table tr:last-child td{border-bottom:none;}
   .note-box{
     background:var(--taupe-light); border-left:3px solid var(--clay);
     padding:16px 20px; font-size:14.5px; color:var(--brown-soft); margin-top:28px;
   }
 
-  form{background:var(--cream-deep); border:1px solid var(--line); padding:36px;}
-  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-bottom:18px;}
-  @media (max-width:520px){ .form-row{grid-template-columns:1fr;} }
-  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:18px;}
+  form{background:var(--cream-deep); border:1px solid var(--line); padding:clamp(22px, 4vw, 36px);}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:0 18px;}
+  .field{display:flex; flex-direction:column; gap:6px; margin-bottom:18px; min-width:0;}
   .field label{font-size:13.5px; color:var(--brown-soft);}
   .field input, .field textarea{
-    font-family:'Work Sans', sans-serif; font-size:15px; color:var(--brown);
+    width:100%;
+    font-family:var(--font-sans); font-size:16px; color:var(--brown);
     background:var(--cream); border:1px solid var(--taupe);
-    padding:11px 13px; border-radius:var(--radius);
+    padding:12px 13px; min-height:48px; border-radius:var(--radius);
+    -webkit-appearance:none; appearance:none;
+    transition:border-color .2s ease, box-shadow .2s ease;
   }
-  .field textarea{resize:vertical; min-height:110px;}
-  .form-actions{display:flex; align-items:center; gap:16px; margin-top:6px;}
+  .field input:focus, .field textarea:focus{border-color:var(--sage-dark); box-shadow:0 0 0 3px rgba(119,136,106,0.18); outline:none;}
+  .field input:focus-visible, .field textarea:focus-visible{outline:2px solid var(--clay); outline-offset:2px;}
+  .field textarea{resize:vertical; min-height:120px; line-height:1.5;}
+  .form-actions{display:flex; align-items:center; flex-wrap:wrap; gap:12px 16px; margin-top:6px;}
   .form-note{font-size:13px; color:var(--brown-soft);}
   .submit-btn{
     background:var(--sage-dark); color:var(--cream); border:none; cursor:pointer;
-    padding:14px 30px; font-size:15px; font-weight:500; border-radius:var(--radius);
-    font-family:'Work Sans', sans-serif; transition:transform .18s ease;
+    min-height:48px; padding:14px 30px; font-size:15px; font-weight:500; border-radius:var(--radius);
+    font-family:var(--font-sans); transition:transform .18s ease, box-shadow .18s ease;
   }
-  .submit-btn:hover{transform:translateY(-2px);}
+  .submit-btn:active{transform:translateY(1px);}
   .form-confirm{
     margin-top:0; padding:0 18px; background:var(--sage-mist);
     border-left:3px solid var(--sage); font-size:14.5px; color:var(--sage-dark);
     max-height:0; opacity:0; overflow:hidden;
     transition:max-height .45s ease, opacity .4s ease, padding .45s ease, margin-top .45s ease;
   }
-  .form-confirm.visible{
-    max-height:120px; opacity:1; padding:14px 18px; margin-top:16px;
+  .form-confirm.visible{max-height:160px; opacity:1; padding:14px 18px; margin-top:16px;}
+
+  @media (max-width:900px){ .contact .wrap{grid-template-columns:1fr;} }
+  @media (max-width:520px){
+    .form-row{grid-template-columns:1fr;}
+    .form-actions{flex-direction:column; align-items:stretch; text-align:center;}
+    .submit-btn{width:100%;}
   }
 
   /* ---------- Anfahrt ---------- */
   .location{background:var(--taupe-light);}
-  .location .wrap{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
-  @media (max-width:820px){ .location .wrap{grid-template-columns:1fr;} }
-  .location h3{font-size:24px; margin-bottom:14px;}
+  .location .wrap{display:grid; grid-template-columns:1fr 1fr; gap:clamp(32px, 5vw, 56px); align-items:center;}
+  .location h3{font-size:clamp(22px, 3vw, 24px); margin-bottom:14px;}
   .location p{color:var(--brown-soft); font-size:16px; margin-bottom:8px;}
   .map-frame{
     border:1px solid var(--taupe); aspect-ratio:4/3; overflow:hidden; background:var(--cream);
   }
   .map-frame iframe{width:100%; height:100%; border:0; filter:sepia(8%) saturate(85%);}
+  @media (max-width:820px){
+    .location .wrap{grid-template-columns:1fr;}
+    .map-frame{aspect-ratio:1/1; max-height:420px; width:100%;}
+  }
 
   /* ---------- Footer ---------- */
   footer{
-    background:var(--brown); color:#DCD6C8; padding:56px 0 32px;
+    background:var(--brown); color:#DCD6C8;
+    padding:56px 0 calc(32px + env(safe-area-inset-bottom));
   }
   footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:32px;}
-  .foot-brand{font-family:'Fraunces', serif; font-size:20px; color:var(--cream); margin-bottom:8px;}
-  .foot-addr{font-size:14px; color:#B9B2A2; line-height:1.7;}
-  .foot-links{display:flex; gap:30px; flex-wrap:wrap;}
-  .foot-links a{font-size:14px; color:#CFC9BB; text-decoration:none;}
-  .foot-links a:hover{color:var(--cream);}
+  .foot-brand{font-family:var(--font-serif); font-size:20px; color:var(--cream); margin-bottom:8px;}
+  .foot-addr{font-size:14px; color:#B9B2A2; line-height:1.7; font-style:normal;}
+  .foot-addr a{text-decoration:none;}
+  .foot-links{display:flex; gap:8px 30px; flex-wrap:wrap; align-items:flex-start;}
+  .foot-links a{font-size:14px; color:#CFC9BB; text-decoration:none; padding:6px 0; transition:color .2s ease;}
   .foot-bottom{
-    max-width:1080px; margin:40px auto 0; padding:20px 32px 0; border-top:1px solid #55483A;
+    max-width:1080px; margin:40px auto 0;
+    padding:20px max(var(--gutter), env(safe-area-inset-right)) 0 max(var(--gutter), env(safe-area-inset-left));
+    border-top:1px solid #55483A;
     font-size:12.5px; color:#8F8879;
+  }
+  @media (max-width:640px){
+    footer .wrap{flex-direction:column;}
+  }
+
+  /* ---------- Hover nur auf Geräten mit Maus (verhindert "klebende" Effekte auf Touch) ---------- */
+  @media (hover:hover) and (pointer:fine){
+    nav.links a:hover{color:var(--sage-dark);}
+    nav.links a:hover::after{transform:scaleX(1);}
+    .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(88,96,72,0.28);}
+    .btn-ghost:hover{border-color:var(--sage-dark); transform:translateY(-2px);}
+    .menu-item:hover{background-color:rgba(119,136,106,0.06);}
+    .submit-btn:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(88,96,72,0.28);}
+    .foot-links a:hover{color:var(--cream);}
+    .info-row a:hover{border-color:var(--sage-dark);}
   }
 </style>
 </head>
 <body>
 
-<header>
+<header id="siteHeader">
   <div class="nav">
-    <a href="#top" class="logo">FUSS<span>BALANCE</span></a>
-    <nav class="links" id="navLinks">
+    <a href="#top" class="logo" aria-label="FUSSBALANCE – zum Seitenanfang">FUSS<span>BALANCE</span></a>
+    <nav class="links" id="navLinks" aria-label="Hauptnavigation">
       <a href="#about">Über mich</a>
       <a href="#leistungen">Leistungen</a>
       <a href="#gutschein">Gutschein</a>
       <a href="#kontakt">Kontakt</a>
     </nav>
     <a href="tel:+41792889803" class="nav-phone">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
       079 288 98 03
     </a>
-    <button class="menu-toggle" id="menuToggle" aria-label="Menü öffnen">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navLinks">
+      <svg class="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><line x1="5" y1="5" x2="19" y2="19"/><line x1="19" y1="5" x2="5" y2="19"/></svg>
     </button>
   </div>
 </header>
@@ -362,16 +456,16 @@
   <section class="hero">
     <div class="wrap">
       <div class="hero-text">
-        <div class="eyebrow-line"><span class="dash"></span><span>Kosmetische Fusspflege in Othmarsingen</span></div>
-        <h1>Für Füsse, die Sie<br>den ganzen Tag <em>tragen.</em></h1>
-        <p class="lead">Herzlich willkommen bei FUSSBALANCE. In meiner Praxis in Othmarsingen lade ich Sie ein, für einen Moment innezuhalten und sich und Ihren Füssen eine elegante Auszeit zu gönnen.</p>
-        <div class="btn-row">
+        <div class="eyebrow-line rise"><span class="dash" aria-hidden="true"></span><span>Kosmetische Fusspflege in Othmarsingen</span></div>
+        <h1 class="rise">Für Füsse, die Sie<br>den ganzen Tag <em>tragen.</em></h1>
+        <p class="lead rise">Herzlich willkommen bei FUSSBALANCE. In meiner Praxis in Othmarsingen lade ich Sie ein, für einen Moment innezuhalten und sich und Ihren Füssen eine elegante Auszeit zu gönnen.</p>
+        <div class="btn-row rise">
           <a href="#kontakt" class="btn btn-primary">Termin vereinbaren</a>
           <a href="#leistungen" class="btn btn-ghost">Leistungen ansehen</a>
         </div>
       </div>
-      <div class="hero-art">
-        <img src="images/hero.jpg" alt="Brigitte Baur bei der Fusspflege in der Praxis FUSSBALANCE">
+      <div class="hero-art rise">
+        <img src="images/hero.jpg" alt="Brigitte Baur bei der Fusspflege in der Praxis FUSSBALANCE" width="800" height="1000" fetchpriority="high" decoding="async">
       </div>
     </div>
   </section>
@@ -380,10 +474,10 @@
   <section class="about" id="about">
     <div class="wrap">
       <div>
-        <div class="quote-block">
-          <p>„Ich biete kosmetische Fusspflege an und bin keine medizinische Podologin.“</p>
-          <div class="who">Brigitte Baur, Praxisinhaberin</div>
-        </div>
+        <figure class="quote-block">
+          <blockquote><p>„Ich biete kosmetische Fusspflege an und bin keine medizinische Podologin.“</p></blockquote>
+          <figcaption class="who">Brigitte Baur, Praxisinhaberin</figcaption>
+        </figure>
       </div>
       <div class="about-body">
         <div class="kicker">Mein Weg von den Blumen zu den Füssen</div>
@@ -391,7 +485,7 @@
         <p>Als gelernte Floristin arbeite ich mit wunderschönen Dingen und schenke Menschen durch Blumen ein Lächeln</p>
         <p>Man steht mehrere Stunden am Tag auf den Füssen und mir wurde bewusst, wie schwer unsere Füsse eigentlich tragen müssen. Sie sind das Fundament unseres Körpers, das uns durch das ganze Leben trägt. Wenn die Füsse schmerzen, leidet die gesamte Lebensqualität.</p>
         <p>Diese persönliche Erfahrung hat mich bewogen eine Ausbildung zur kosmetischen Fusspflegerin zu absovieren. Nach der Ausbildung Ende Juni 2026 bei Dobi Academy habe ich mir einen Wunsch erfüllt mit dem Schritt mit dem Schritt in die Selbstständigkeit</p>
-        <p>Ich möchte mein Bewusstsein für die Wichtigkeit der Fussgesundheit nutzen um anderen Menschen direkt zu helfen. Denn gesunde Füsse sind die Basis für unser tägliches Wohlbefinden.
+        <p>Ich möchte mein Bewusstsein für die Wichtigkeit der Fussgesundheit nutzen um anderen Menschen direkt zu helfen. Denn gesunde Füsse sind die Basis für unser tägliches Wohlbefinden.</p>
         <div class="signoff">
           <div class="name">Brigitte Baur</div>
           <div class="role">Dipl. kosmetische Fusspflegerin · Mitglied des Schweizerischen Fusspflegeverbands</div>
@@ -478,7 +572,7 @@
   <section class="gift" id="gutschein">
     <div class="wrap">
       <div>
-        <div class="kicker" style="color:#C9D4BC;">Schenken Sie Wohlbefinden</div>
+        <div class="kicker">Schenken Sie Wohlbefinden</div>
         <h2>Ein Gutschein für die Fusspflege</h2>
         <p>Gepflegte und schöne Füsse sind ein Geschenk der Entspannung. Ob Geburtstag, Muttertag, Dankeschön oder Weihnachten — machen Sie Ihren Liebsten eine Freude.</p>
         <span class="gift-amount">Geldbetrag frei wählbar</span>
@@ -497,7 +591,7 @@
   <section class="contact" id="kontakt">
     <div class="wrap">
       <div>
-        <div class="section-head" style="margin-bottom:38px;">
+        <div class="section-head">
           <div class="kicker">Terminvereinbarung</div>
           <h2>Kontakt &amp; Öffnungszeiten</h2>
           <p>Termine nach Vereinbarung — rufen Sie mich an oder schreiben Sie mir eine Nachricht.</p>
@@ -506,19 +600,19 @@
         <div class="info-block">
           <h4>So erreichen Sie mich</h4>
           <div class="info-row">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             <a href="tel:+41792889803">079 288 98 03</a>
           </div>
           <div class="info-row">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             <span>Brigitte Baur, Ebnet 8, 5504 Othmarsingen</span>
           </div>
           <div class="info-row">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/></svg>
             <span>Nachricht über das Kontaktformular</span>
           </div>
           <div class="info-row">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
             <span>Zahlung: Bargeld oder TWINT</span>
           </div>
         </div>
@@ -526,12 +620,14 @@
         <div class="info-block">
           <h4>Öffnungszeiten</h4>
           <table class="hours-table">
-            <tr><td>Montag</td><td>8.00 – 18.00 Uhr</td></tr>
-            <tr><td>Dienstag</td><td>8.00 – 18.00 Uhr</td></tr>
-            <tr><td>Mittwoch</td><td>geschlossen</td></tr>
-            <tr><td>Donnerstag</td><td>8.00 – 18.00 Uhr</td></tr>
-            <tr><td>Freitag</td><td>8.00 – 12.00 Uhr</td></tr>
-            <tr><td>Samstag</td><td>8.00 – 12.00 Uhr</td></tr>
+            <tbody>
+              <tr><td>Montag</td><td>8.00 – 18.00 Uhr</td></tr>
+              <tr><td>Dienstag</td><td>8.00 – 18.00 Uhr</td></tr>
+              <tr><td>Mittwoch</td><td>geschlossen</td></tr>
+              <tr><td>Donnerstag</td><td>8.00 – 18.00 Uhr</td></tr>
+              <tr><td>Freitag</td><td>8.00 – 12.00 Uhr</td></tr>
+              <tr><td>Samstag</td><td>8.00 – 12.00 Uhr</td></tr>
+            </tbody>
           </table>
         </div>
 
@@ -541,46 +637,46 @@
       </div>
 
       <div>
-        <form id="contactForm">
+        <form id="contactForm" novalidate>
           <div class="form-row">
             <div class="field">
               <label for="vorname">Vorname</label>
-              <input type="text" id="vorname" name="vorname" required>
+              <input type="text" id="vorname" name="vorname" autocomplete="given-name" required>
             </div>
             <div class="field">
               <label for="nachname">Name</label>
-              <input type="text" id="nachname" name="nachname" required>
+              <input type="text" id="nachname" name="nachname" autocomplete="family-name" required>
             </div>
           </div>
           <div class="form-row">
             <div class="field">
               <label for="adresse">Adresse</label>
-              <input type="text" id="adresse" name="adresse">
+              <input type="text" id="adresse" name="adresse" autocomplete="street-address">
             </div>
             <div class="field">
               <label for="ort">PLZ / Ort</label>
-              <input type="text" id="ort" name="ort">
+              <input type="text" id="ort" name="ort" autocomplete="address-level2">
             </div>
           </div>
           <div class="form-row">
             <div class="field">
               <label for="email">E-Mail-Adresse</label>
-              <input type="email" id="email" name="email" required>
+              <input type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" required>
             </div>
             <div class="field">
               <label for="telefon">Telefonnummer</label>
-              <input type="tel" id="telefon" name="telefon">
+              <input type="tel" id="telefon" name="telefon" autocomplete="tel" inputmode="tel">
             </div>
           </div>
           <div class="field">
             <label for="nachricht">Nachricht</label>
-            <textarea id="nachricht" name="nachricht" placeholder="Ihr Wunschtermin, Behandlung oder Anliegen …"></textarea>
+            <textarea id="nachricht" name="nachricht" rows="5" placeholder="Ihr Wunschtermin, Behandlung oder Anliegen …"></textarea>
           </div>
           <div class="form-actions">
             <button type="submit" class="submit-btn">Senden</button>
             <span class="form-note">Ich melde mich zeitnah bei Ihnen zurück.</span>
           </div>
-          <div class="form-confirm" id="formConfirm">Vielen Dank für Ihre Nachricht — ich melde mich in Kürze bei Ihnen.</div>
+          <div class="form-confirm" id="formConfirm" role="status" aria-live="polite">Vielen Dank für Ihre Nachricht — ich melde mich in Kürze bei Ihnen.</div>
         </form>
       </div>
     </div>
@@ -597,6 +693,7 @@
       </div>
       <div class="map-frame">
         <iframe title="Standort FUSSBALANCE, Ebnet 8, 5504 Othmarsingen" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
           src="https://www.google.com/maps?q=Ebnet+8,+5504+Othmarsingen&output=embed">
         </iframe>
       </div>
@@ -609,14 +706,14 @@
   <div class="wrap">
     <div>
       <div class="foot-brand">FUSSBALANCE</div>
-      <div class="foot-addr">Brigitte Baur<br>Ebnet 8, 5504 Othmarsingen<br>079 288 98 03</div>
+      <address class="foot-addr">Brigitte Baur<br>Ebnet 8, 5504 Othmarsingen<br><a href="tel:+41792889803">079 288 98 03</a></address>
     </div>
-    <div class="foot-links">
+    <nav class="foot-links" aria-label="Footer-Navigation">
       <a href="#about">Über mich</a>
       <a href="#leistungen">Leistungen</a>
       <a href="#gutschein">Gutschein</a>
       <a href="#kontakt">Kontakt</a>
-    </div>
+    </nav>
   </div>
   <div class="foot-bottom">
     © 2026 FUSSBALANCE, Brigitte Baur. Kosmetische Fusspflege — keine medizinische Podologie.
@@ -624,23 +721,68 @@
 </footer>
 
 <script>
-  document.getElementById('menuToggle').addEventListener('click', function(){
-    document.getElementById('navLinks').classList.toggle('open');
+(function(){
+  'use strict';
+
+  var header = document.getElementById('siteHeader');
+  var toggle = document.getElementById('menuToggle');
+  var nav    = document.getElementById('navLinks');
+  var form   = document.getElementById('contactForm');
+  var confirmBox = document.getElementById('formConfirm');
+  var mqDesktop = window.matchMedia('(min-width: 821px)');
+
+  /* ---------- Mobile-Menü ---------- */
+  function setMenu(open){
+    nav.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Menü schliessen' : 'Menü öffnen');
+  }
+  toggle.addEventListener('click', function(e){
+    e.stopPropagation();
+    setMenu(!nav.classList.contains('open'));
   });
-  document.querySelectorAll('.links a').forEach(function(a){
-    a.addEventListener('click', function(){ document.getElementById('navLinks').classList.remove('open'); });
+  nav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ setMenu(false); });
   });
-  document.getElementById('contactForm').addEventListener('submit', function(e){
+  // Schliessen bei Klick ausserhalb
+  document.addEventListener('click', function(e){
+    if (nav.classList.contains('open') && !header.contains(e.target)) setMenu(false);
+  });
+  // Schliessen mit Escape
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && nav.classList.contains('open')) { setMenu(false); toggle.focus(); }
+  });
+  // Zurücksetzen beim Wechsel auf Desktop-Breite
+  var onBreakpoint = function(e){ if (e.matches) setMenu(false); };
+  if (mqDesktop.addEventListener) mqDesktop.addEventListener('change', onBreakpoint);
+  else if (mqDesktop.addListener) mqDesktop.addListener(onBreakpoint);
+
+  /* ---------- Header-Schatten beim Scrollen (rAF-gedrosselt) ---------- */
+  var ticking = false;
+  function updateHeader(){
+    header.classList.toggle('scrolled', window.scrollY > 12);
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking){ window.requestAnimationFrame(updateHeader); ticking = true; }
+  }, {passive:true});
+  updateHeader();
+
+  /* ---------- Kontaktformular ---------- */
+  form.addEventListener('submit', function(e){
     e.preventDefault();
-    document.getElementById('formConfirm').classList.add('visible');
-    this.reset();
+    if (!form.checkValidity()){
+      form.reportValidity();
+      return;
+    }
+    confirmBox.classList.add('visible');
+    form.reset();
+    // Auf Mobile Bestätigung sichtbar machen
+    setTimeout(function(){
+      confirmBox.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }, 120);
   });
-  var siteHeader = document.querySelector('header');
-  var onScroll = function(){
-    siteHeader.classList.toggle('scrolled', window.scrollY > 12);
-  };
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
+})();
 </script>
 
 </body>
