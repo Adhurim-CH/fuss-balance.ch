@@ -8,7 +8,7 @@
 <title>FUSSBALANCE – Kosmetische Fusspflege in Othmarsingen</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="images/hero.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="images/hero.png" fetchpriority="high">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -217,20 +217,26 @@
   .btn-ghost{background:transparent; color:var(--sage-dark); border:1px solid var(--taupe);}
   .btn:active{transform:translateY(1px);}
 
-  .hero-art{position:relative; animation-duration:1s; animation-delay:.28s;}
+  /* Logo-Bild: transparent, nie beschnitten, kein Rahmen */
+  .hero-art{
+    position:relative;
+    display:flex; justify-content:center; align-items:center;
+    animation-duration:1s; animation-delay:.28s;
+  }
   .hero-art img{
     width:100%; height:auto;
-    aspect-ratio:4/5;
-    object-fit:cover;
-    border-radius:var(--radius);
-    border:1px solid var(--line);
-    background:var(--cream-deep);
+    max-width:520px;
+    max-height:70vh;
+    object-fit:contain;
+    background:transparent;
+    border:none;
+    border-radius:0;
   }
 
   @media (max-width:860px){
     .hero .wrap{grid-template-columns:1fr;}
     .hero-art{order:-1;}
-    .hero-art img{aspect-ratio:4/3; max-height:60vh;}
+    .hero-art img{width:auto; max-width:100%; max-height:48vh; margin:0 auto;}
   }
   @media (max-width:480px){
     .btn-row{flex-direction:column;}
@@ -465,7 +471,8 @@
         </div>
       </div>
       <div class="hero-art rise">
-        <img src="images/hero.jpg" alt="Brigitte Baur bei der Fusspflege in der Praxis FUSSBALANCE" width="800" height="1000" fetchpriority="high" decoding="async">
+        <!-- Transparentes PNG (oder SVG/WebP) verwenden, kein JPG -->
+        <img src="images/hero.png" alt="FUSSBALANCE – Logo, kosmetische Fusspflege" fetchpriority="high" decoding="async">
       </div>
     </div>
   </section>
@@ -482,10 +489,10 @@
       <div class="about-body">
         <div class="kicker">Mein Weg von den Blumen zu den Füssen</div>
         <h3>Über FUSSBALANCE</h3>
-        <p>Als gelernte Floristin arbeite ich mit wunderschönen Dingen und schenke Menschen durch Blumen ein Lächeln</p>
+        <p>Als gelernte Floristin arbeite ich mit wunderschönen Dingen und schenke Menschen durch Blumen ein Lächeln.</p>
         <p>Man steht mehrere Stunden am Tag auf den Füssen und mir wurde bewusst, wie schwer unsere Füsse eigentlich tragen müssen. Sie sind das Fundament unseres Körpers, das uns durch das ganze Leben trägt. Wenn die Füsse schmerzen, leidet die gesamte Lebensqualität.</p>
-        <p>Diese persönliche Erfahrung hat mich bewogen eine Ausbildung zur kosmetischen Fusspflegerin zu absovieren. Nach der Ausbildung Ende Juni 2026 bei Dobi Academy habe ich mir einen Wunsch erfüllt mit dem Schritt mit dem Schritt in die Selbstständigkeit</p>
-        <p>Ich möchte mein Bewusstsein für die Wichtigkeit der Fussgesundheit nutzen um anderen Menschen direkt zu helfen. Denn gesunde Füsse sind die Basis für unser tägliches Wohlbefinden.</p>
+        <p>Diese persönliche Erfahrung hat mich bewogen, eine Ausbildung zur kosmetischen Fusspflegerin zu absolvieren. Nach der Ausbildung Ende Juni 2026 bei Dobi Academy habe ich mir mit dem Schritt in die Selbstständigkeit einen Wunsch erfüllt.</p>
+        <p>Ich möchte mein Bewusstsein für die Wichtigkeit der Fussgesundheit nutzen, um anderen Menschen direkt zu helfen. Denn gesunde Füsse sind die Basis für unser tägliches Wohlbefinden.</p>
         <div class="signoff">
           <div class="name">Brigitte Baur</div>
           <div class="role">Dipl. kosmetische Fusspflegerin · Mitglied des Schweizerischen Fusspflegeverbands</div>
