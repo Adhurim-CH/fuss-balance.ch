@@ -406,6 +406,7 @@
     font-family:var(--font-sans); transition:transform .18s ease, box-shadow .18s ease;
   }
   .submit-btn:active{transform:translateY(1px);}
+  .submit-btn:disabled{opacity:.6; cursor:wait; transform:none; box-shadow:none;}
   .form-confirm{
     margin-top:0; padding:0 18px; background:var(--sage-mist);
     border-left:3px solid var(--sage); font-size:14.5px; color:var(--sage-dark);
@@ -413,6 +414,10 @@
     transition:max-height .45s ease, opacity .4s ease, padding .45s ease, margin-top .45s ease;
   }
   .form-confirm.visible{max-height:160px; opacity:1; padding:14px 18px; margin-top:16px;}
+  .form-confirm.error{background:var(--taupe-light); border-left-color:var(--clay); color:var(--brown);}
+
+  /* Spam-Schutz (Honeypot): für Menschen unsichtbar */
+  .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
 
   @media (max-width:900px){ .contact .wrap{grid-template-columns:1fr;} }
   @media (max-width:520px){
@@ -474,7 +479,7 @@
     .btn-primary:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(88,96,72,0.28);}
     .btn-ghost:hover{border-color:var(--sage-dark); transform:translateY(-2px);}
     .menu-item:hover{background-color:rgba(119,136,106,0.06);}
-    .submit-btn:hover{transform:translateY(-2px); box-shadow:0 8px 20px rgba(88,96,72,0.28);}
+    .submit-btn:hover:not(:disabled){transform:translateY(-2px); box-shadow:0 8px 20px rgba(88,96,72,0.28);}
     .foot-links a:hover{color:var(--cream);}
     .info-row a:hover{border-color:var(--sage-dark);}
   }
@@ -694,7 +699,15 @@
       </div>
 
       <div>
-        <form id="contactForm" novalidate>
+        <!-- FORMSPREE: Endpoint-URL unten bei action="" ersetzen (DEINE_ID) -->
+        <form id="contactForm" action="https://formspree.io/f/xoejlkeb" method="POST">
+          <!-- Spam-Schutz (Honeypot) -->
+          <div class="hp" aria-hidden="true">
+            <label for="gotcha">Bitte leer lassen</label>
+            <input type="text" id="gotcha" name="_gotcha" tabindex="-1" autocomplete="off">
+          </div>
+          <input type="hidden" name="_subject" value="Neue Anfrage über die Website FUSSBALANCE">
+
           <div class="form-row">
             <div class="field">
               <label for="vorname">Vorname</label>
@@ -830,19 +843,53 @@
   }, {passive:true});
   updateHeader();
 
-  /* ---------- Kontaktformular ---------- */
+  /* ---------- Kontaktformular (Formspree) ----------
+     Ohne JavaScript sendet das Formular normal per POST an Formspree.
+     Mit JavaScript wird im Hintergrund gesendet und die Bestätigung
+     direkt im Formular angezeigt. */
+  var submitBtn = form.querySelector('.submit-btn');
+  var successText = 'Vielen Dank für Ihre Nachricht — ich melde mich in Kürze bei Ihnen.';
+
+  function showMessage(text, isError){
+    confirmBox.textContent = text;
+    confirmBox.classList.toggle('error', !!isError);
+    confirmBox.classList.add('visible');
+    // Auf Mobile Meldung sichtbar machen
+    setTimeout(function(){
+      confirmBox.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }, 120);
+  }
+
   form.addEventListener('submit', function(e){
     e.preventDefault();
     if (!form.checkValidity()){
       form.reportValidity();
       return;
     }
-    confirmBox.classList.add('visible');
-    form.reset();
-    // Auf Mobile Bestätigung sichtbar machen
-    setTimeout(function(){
-      confirmBox.scrollIntoView({behavior:'smooth', block:'nearest'});
-    }, 120);
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Wird gesendet …';
+
+    fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(function(response){
+      if (response.ok){
+        showMessage(successText, false);
+        form.reset();
+      } else {
+        showMessage('Das Senden hat leider nicht geklappt. Bitte versuchen Sie es erneut oder rufen Sie mich an: 079 288 98 03.', true);
+      }
+    })
+    .catch(function(){
+      showMessage('Keine Verbindung. Bitte versuchen Sie es erneut oder rufen Sie mich an: 079 288 98 03.', true);
+    })
+    .then(function(){
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Senden';
+    });
   });
 })();
 </script>
