@@ -342,7 +342,7 @@
   .slides{
     display:flex; overflow-x:auto; overscroll-behavior-x:contain;
     scroll-snap-type:x mandatory; scrollbar-width:none; -ms-overflow-style:none;
-    aspect-ratio:4 / 3;
+    aspect-ratio:4 / 3; isolation:isolate;
     background:var(--taupe-light); border:1px solid var(--line); border-radius:var(--radius);
   }
   .slides::-webkit-scrollbar{display:none;}
@@ -364,7 +364,7 @@
   }
 
   .slider-btn{
-    position:absolute; top:50%; transform:translateY(-50%);
+    position:absolute; top:50%; transform:translateY(-50%); z-index:5;
     width:48px; height:48px; border-radius:50%;
     background:rgba(246,243,236,0.92); color:var(--sage-dark);
     border:1px solid var(--taupe); cursor:pointer;
