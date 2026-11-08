@@ -297,14 +297,8 @@
 
   /* ---------- Services (menu style) ---------- */
   .services .section-head{margin-bottom:clamp(40px, 7vw, 64px);}
-  .services-layout{
-    display:grid; grid-template-columns:0.62fr 1.38fr; gap:clamp(32px, 5vw, 56px); align-items:start;
-  }
-  .services-photo{
-    position:sticky; top:calc(var(--header-h) + 24px);
-    aspect-ratio:3 / 4;
-  }
-  .services-photo img{width:100%; height:100%;}
+  /* Preisliste ohne Foto: bleibt lesbar schmal, Preise rücken nicht weit von den Namen weg */
+  .services-menu{max-width:760px;}
   .menu-group{margin-bottom:clamp(44px, 7vw, 64px);}
   .menu-group:last-child{margin-bottom:0;}
   .menu-group-title{
@@ -325,12 +319,6 @@
   .menu-item .price{font-family:var(--font-serif); font-size:19px; color:var(--sage-dark); white-space:nowrap; font-variant-numeric:tabular-nums;}
   .menu-item .desc{grid-column:1 / -1; color:var(--brown-soft); font-size:15px; max-width:60ch;}
   .menu-item .note{grid-column:1 / -1; color:var(--clay); font-size:14px; font-style:italic;}
-  @media (max-width:860px){
-    .services-layout{grid-template-columns:1fr;}
-    /* Mobil: Foto als breites, flaches Bild, damit die Preisliste schnell erreichbar bleibt */
-    .services-photo{position:static; aspect-ratio:4 / 3; margin-bottom:clamp(36px, 7vw, 48px);}
-    .services-photo img{object-position:center 60%;}
-  }
   @media (max-width:640px){
     .menu-item{padding:18px 0; margin:0; gap:6px 14px;}
     .menu-item .name, .menu-item .price{font-size:17.5px;}
@@ -625,10 +613,6 @@
       </div>
 
       <div class="services-layout">
-        <figure class="photo services-photo">
-          <img src="images/Foto-von-Praxis.jpeg" alt="Behandlungsstuhl in der Praxis FUSSBALANCE" width="1200" height="1600" loading="lazy" decoding="async">
-        </figure>
-
         <div class="services-menu">
           <!-- Pedicure -->
           <div class="menu-group">
