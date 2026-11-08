@@ -336,6 +336,54 @@
     .menu-item .name, .menu-item .price{font-size:17.5px;}
   }
 
+  /* ---------- Einblicke (Slideshow) ---------- */
+  .gallery{background:var(--cream-deep);}
+  .slider{position:relative; max-width:880px; margin:0 auto;}
+  .slides{
+    display:flex; overflow-x:auto; overscroll-behavior-x:contain;
+    scroll-snap-type:x mandatory; scrollbar-width:none; -ms-overflow-style:none;
+    aspect-ratio:3 / 2;
+    background:var(--taupe-light); border:1px solid var(--line); border-radius:var(--radius);
+  }
+  .slides::-webkit-scrollbar{display:none;}
+  .slide{flex:0 0 100%; width:100%; height:100%; margin:0; scroll-snap-align:center; scroll-snap-stop:always;}
+  /* Unterschiedliche Auflösungen/Formate: Bild füllt immer den gleichen Rahmen */
+  .slide img{width:100%; height:100%; object-fit:cover; object-position:center;}
+
+  .slider-btn{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:48px; height:48px; border-radius:50%;
+    background:rgba(246,243,236,0.92); color:var(--sage-dark);
+    border:1px solid var(--taupe); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background-color .2s ease, border-color .2s ease;
+  }
+  .slider-btn svg{width:20px; height:20px;}
+  .slider-btn.prev{left:14px;}
+  .slider-btn.next{right:14px;}
+
+  .slider-dots{display:flex; justify-content:center; gap:2px; margin-top:14px;}
+  .slider-dots button{
+    width:32px; height:32px; background:none; border:none; padding:0; cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .slider-dots button::before{
+    content:''; width:9px; height:9px; border-radius:50%;
+    border:1px solid var(--sage-dark); background:transparent;
+    transition:background-color .2s ease, transform .2s ease;
+  }
+  .slider-dots button[aria-current="true"]::before{background:var(--sage-dark); transform:scale(1.15);}
+
+  @media (max-width:640px){
+    .slides{aspect-ratio:4 / 3;}
+    .slider-btn{width:44px; height:44px;}
+    .slider-btn.prev{left:8px;}
+    .slider-btn.next{right:8px;}
+  }
+  @media (hover:hover) and (pointer:fine){
+    .slider-btn:hover{background:var(--cream); border-color:var(--sage-dark);}
+  }
+
   /* ---------- Gutschein band ---------- */
   .gift{background:var(--sage-dark); color:var(--cream); position:relative; overflow:hidden;}
   .gift .wrap{display:grid; grid-template-columns:1fr 1fr; gap:clamp(36px, 5vw, 56px); align-items:center;}
@@ -630,6 +678,37 @@
     </div>
   </section>
 
+  <!-- EINBLICKE -->
+  <section class="gallery" id="einblicke">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="kicker">Meine Praxis</div>
+        <h2>Einblicke in die Praxis</h2>
+      </div>
+
+      <div class="slider" role="group" aria-roledescription="Karussell" aria-label="Einblicke in die Praxis">
+        <div class="slides" id="slides" tabindex="0" aria-live="polite">
+          <figure class="slide" role="group" aria-roledescription="Folie" aria-label="1 von 3">
+            <img src="images/praxis-1.jpg" alt="Einblick in die Praxis FUSSBALANCE, Bild 1" loading="lazy" decoding="async">
+          </figure>
+          <figure class="slide" role="group" aria-roledescription="Folie" aria-label="2 von 3">
+            <img src="images/praxis-2.jpg" alt="Einblick in die Praxis FUSSBALANCE, Bild 2" loading="lazy" decoding="async">
+          </figure>
+          <figure class="slide" role="group" aria-roledescription="Folie" aria-label="3 von 3">
+            <img src="images/praxis-3.jpg" alt="Einblick in die Praxis FUSSBALANCE, Bild 3" loading="lazy" decoding="async">
+          </figure>
+        </div>
+        <button class="slider-btn prev" id="slidePrev" type="button" aria-label="Vorheriges Bild">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="slider-btn next" id="slideNext" type="button" aria-label="Nächstes Bild">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+      <div class="slider-dots" id="slideDots"></div>
+    </div>
+  </section>
+
   <!-- GUTSCHEIN -->
   <section class="gift" id="gutschein">
     <div class="wrap">
@@ -891,6 +970,60 @@
       submitBtn.textContent = 'Senden';
     });
   });
+})();
+</script>
+
+<script>
+/* ---------- Einblicke: Slideshow ---------- */
+(function(){
+  'use strict';
+  var track = document.getElementById('slides');
+  var prev  = document.getElementById('slidePrev');
+  var next  = document.getElementById('slideNext');
+  var dotsBox = document.getElementById('slideDots');
+  if (!track) return;
+
+  var slides = track.children;
+  var count = slides.length;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var current = 0;
+
+  // Punkte erzeugen
+  for (var i = 0; i < count; i++){
+    (function(i){
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Bild ' + (i + 1) + ' anzeigen');
+      b.addEventListener('click', function(){ goTo(i); });
+      dotsBox.appendChild(b);
+    })(i);
+  }
+  var dots = dotsBox.children;
+
+  function update(){
+    current = Math.round(track.scrollLeft / track.clientWidth);
+    for (var i = 0; i < dots.length; i++){
+      dots[i].setAttribute('aria-current', i === current ? 'true' : 'false');
+    }
+  }
+  function goTo(i){
+    i = (i + count) % count;
+    track.scrollTo({left: i * track.clientWidth, behavior: reduce ? 'auto' : 'smooth'});
+  }
+
+  prev.addEventListener('click', function(){ goTo(current - 1); });
+  next.addEventListener('click', function(){ goTo(current + 1); });
+  track.addEventListener('keydown', function(e){
+    if (e.key === 'ArrowLeft'){ e.preventDefault(); goTo(current - 1); }
+    if (e.key === 'ArrowRight'){ e.preventDefault(); goTo(current + 1); }
+  });
+
+  var ticking = false;
+  track.addEventListener('scroll', function(){
+    if (!ticking){ window.requestAnimationFrame(function(){ update(); ticking = false; }); ticking = true; }
+  }, {passive:true});
+  window.addEventListener('resize', function(){ track.scrollLeft = current * track.clientWidth; });
+  update();
 })();
 </script>
 
