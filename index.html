@@ -338,17 +338,30 @@
 
   /* ---------- Einblicke (Slideshow) ---------- */
   .gallery{background:var(--cream-deep);}
-  .slider{position:relative; max-width:880px; margin:0 auto;}
+  .slider{position:relative; max-width:840px; margin:0 auto;}
   .slides{
     display:flex; overflow-x:auto; overscroll-behavior-x:contain;
     scroll-snap-type:x mandatory; scrollbar-width:none; -ms-overflow-style:none;
-    aspect-ratio:3 / 2;
+    aspect-ratio:4 / 3;
     background:var(--taupe-light); border:1px solid var(--line); border-radius:var(--radius);
   }
   .slides::-webkit-scrollbar{display:none;}
-  .slide{flex:0 0 100%; width:100%; height:100%; margin:0; scroll-snap-align:center; scroll-snap-stop:always;}
-  /* Unterschiedliche Auflösungen/Formate: Bild füllt immer den gleichen Rahmen */
-  .slide img{width:100%; height:100%; object-fit:cover; object-position:center;}
+  .slide{
+    flex:0 0 100%; width:100%; height:100%; margin:0;
+    scroll-snap-align:center; scroll-snap-stop:always;
+    position:relative; overflow:hidden;
+  }
+  /* Unscharfe Kopie des Bildes füllt den Rahmen, falls das Bild ein anderes Format hat (z. B. Hochformat) */
+  .slide::before{
+    content:''; position:absolute; inset:-24px; z-index:0;
+    background:var(--bg) center / cover no-repeat;
+    filter:blur(22px) saturate(1.05); opacity:.6;
+  }
+  /* Bild wird immer vollständig gezeigt, ohne Beschnitt */
+  .slide img{
+    position:relative; z-index:1;
+    width:100%; height:100%; object-fit:contain; object-position:center;
+  }
 
   .slider-btn{
     position:absolute; top:50%; transform:translateY(-50%);
@@ -375,7 +388,6 @@
   .slider-dots button[aria-current="true"]::before{background:var(--sage-dark); transform:scale(1.15);}
 
   @media (max-width:640px){
-    .slides{aspect-ratio:4 / 3;}
     .slider-btn{width:44px; height:44px;}
     .slider-btn.prev{left:8px;}
     .slider-btn.next{right:8px;}
@@ -688,14 +700,14 @@
 
       <div class="slider" role="group" aria-roledescription="Karussell" aria-label="Einblicke in die Praxis">
         <div class="slides" id="slides" tabindex="0" aria-live="polite">
-          <figure class="slide" role="group" aria-roledescription="Folie" aria-label="1 von 3">
-            <img src="images/praxis-1.jpeg" alt="Einblick in die Praxis FUSSBALANCE, Bild 1" loading="lazy" decoding="async">
+          <figure class="slide" role="group" aria-roledescription="Folie" aria-label="1 von 3" style="--bg:url('images/praxis-1.jpeg')">
+            <img src="images/praxis-1.jpeg" alt="Behandlungsraum mit Pediküre-Stuhl, Gerätewagen und Diplom" width="1600" height="1200" loading="lazy" decoding="async">
           </figure>
-          <figure class="slide" role="group" aria-roledescription="Folie" aria-label="2 von 3">
-            <img src="images/praxis-2.jpeg" alt="Einblick in die Praxis FUSSBALANCE, Bild 2" loading="lazy" decoding="async">
+          <figure class="slide" role="group" aria-roledescription="Folie" aria-label="2 von 3" style="--bg:url('images/praxis-2.jpeg')">
+            <img src="images/praxis-2.jpeg" alt="Regal mit Pflegeprodukten, Nagellacken und Gutschein" width="1600" height="1200" loading="lazy" decoding="async">
           </figure>
-          <figure class="slide" role="group" aria-roledescription="Folie" aria-label="3 von 3">
-            <img src="images/praxis-3.jpeg" alt="Einblick in die Praxis FUSSBALANCE, Bild 3" loading="lazy" decoding="async">
+          <figure class="slide" role="group" aria-roledescription="Folie" aria-label="3 von 3" style="--bg:url('images/praxis-3.jpeg')">
+            <img src="images/praxis-3.jpeg" alt="Pediküre-Stuhl mit Handtüchern und Servierwagen" width="1200" height="1600" loading="lazy" decoding="async">
           </figure>
         </div>
         <button class="slider-btn prev" id="slidePrev" type="button" aria-label="Vorheriges Bild">
